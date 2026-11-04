@@ -6,7 +6,7 @@ let allOrders = [];
 let soundEnabled = true;
 let audioCtx = null;
 let currentConfig = null;
-let currentCustomerUrl = '';
+let currentCustomerUrl = 'https://pedidopinheirochurros.onrender.com';
 
 // Audio Synthesizer (Loud & Clear Trailer Chime)
 function initAudio() {

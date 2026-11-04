@@ -9,69 +9,56 @@
 </head>
 <body class="kitchen-body">
 
-  <!-- BARRA SUPERIOR DO TRAILER -->
-  <header class="kitchen-header">
-    <div class="kitchen-brand" style="display: flex; align-items: center; gap: 14px;">
-      <img src="/img/logo.jpg" alt="Logo" style="height: 52px; width: auto; object-fit: contain; border-radius: 8px; border: 1.5px solid #00C8FF;">
+  <!-- BARRA SUPERIOR ELEGANTE E LIMPA -->
+  <header class="kitchen-header" style="background: #14151B; padding: 14px 28px; border-bottom: 2px solid #00C8FF; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+    
+    <!-- Lado Esquerdo: Logo + Título + Link Oficial Discreto -->
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <img src="/img/logo.jpg" alt="Pinheiro Churros" style="height: 52px; width: auto; object-fit: contain; border-radius: 8px; border: 1.5px solid #00C8FF; box-shadow: 0 0 12px rgba(0, 200, 255, 0.25);">
       <div>
-        <h1 class="kitchen-title" id="admin-trailer-name">Painel da Cozinha • Pinheiro Churros</h1>
-        <p class="kitchen-subtitle">Sistema de Pedidos Drive-Thru & Balcão em Tempo Real</p>
+        <h1 style="font-size: 18px; font-weight: 900; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+          PINHEIRO CHURROS <span style="color: #FF3366;">•</span> <span style="color: #00C8FF;">PAINEL DA COZINHA</span>
+        </h1>
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+          <a href="https://pedidopinheirochurros.onrender.com" target="_blank" style="color: #94A3B8; font-size: 12px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+            <span>🌐</span> <span style="color: #CBD5E1; text-decoration: underline;">pedidopinheirochurros.onrender.com</span>
+          </a>
+          <button id="btn-copy-customer-link" type="button" style="background: #1E293B; color: #38BDF8; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 800; cursor: pointer;">
+            📋 Copiar Link
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Estatísticas e Controles -->
-    <div class="kitchen-controls">
-      <div class="stat-pill">
-        <span>Pedidos Hoje:</span>
-        <span class="stat-value" id="stat-count-today">0</span>
+    <!-- Centro: Métricas do Dia (Pedidos Hoje + Faturado) -->
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="background: #1B1D26; border: 1px solid #2B2F3E; padding: 8px 18px; border-radius: 999px; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+        <span style="color: #94A3B8;">Pedidos Hoje:</span>
+        <span id="stat-count-today" style="color: #00C8FF; font-size: 16px; font-weight: 900;">0</span>
       </div>
 
-      <div class="stat-pill">
-        <span>Faturado:</span>
-        <span class="stat-value" id="stat-revenue-today">R$ 0,00</span>
+      <div style="background: #1B1D26; border: 1.5px solid #FFE600; padding: 8px 20px; border-radius: 999px; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(255, 230, 0, 0.15);">
+        <span style="color: #FFFFFF;">Faturado:</span>
+        <span id="stat-revenue-today" style="color: #FFE600; font-size: 17px; font-weight: 900;">R$ 0,00</span>
       </div>
+    </div>
 
-      <button class="btn-kitchen-action btn-accent" id="btn-test-sound" title="Clique para testar o som do alarme">
-        <span>🔔 Testar Som</span>
+    <!-- Lado Direito: Apenas os botões essenciais -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button class="btn-kitchen-action" id="btn-open-history" style="background: #0284C7; border: 1px solid #38BDF8; color: white; font-weight: 800; padding: 9px 16px; border-radius: 8px;">
+        <span>📊 Vendas Anteriores</span>
       </button>
 
-      <button class="btn-kitchen-action" id="btn-toggle-sound">
+      <button class="btn-kitchen-action" id="btn-toggle-sound" style="background: #1E293B; border: 1px solid #334155; color: white; padding: 9px 16px; border-radius: 8px; font-weight: 700;">
         <span id="sound-status-icon">🔊</span>
         <span id="sound-status-text">Som Ativo</span>
       </button>
 
-      <button class="btn-kitchen-action" id="btn-copy-customer-link" style="background: #10B981; border-color: #10B981; color: white; font-weight: 800;">
-        <span>🔗 Copiar Link dos Pedidos</span>
-      </button>
-
-      <button class="btn-kitchen-action" id="btn-open-history" style="background: #0284C7; border-color: #0284C7; color: white; font-weight: 800;">
-        <span>📊 Vendas Anteriores</span>
-      </button>
-
-      <button class="btn-kitchen-action" id="btn-open-settings">
+      <button class="btn-kitchen-action" id="btn-open-settings" style="background: #1E293B; border: 1px solid #334155; color: #94A3B8; padding: 9px 14px; border-radius: 8px;">
         <span>⚙ Configurações</span>
       </button>
     </div>
   </header>
-
-  <!-- BARRA DE LINK RÁPIDO DO CLIENTE (SUBSTITUI O QR CODE) -->
-  <div style="background: #14151B; border-bottom: 2px solid #00C8FF; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px;">
-    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-      <span style="background: #FF3366; color: #FFFFFF; padding: 4px 10px; border-radius: 6px; font-weight: 900; letter-spacing: 0.5px;">🔗 LINK DOS PEDIDOS:</span>
-      <a id="header-customer-link-display" href="#" target="_blank" style="font-family: monospace; color: #00C8FF; font-weight: 900; font-size: 15px; user-select: all; background: #0A0A0C; padding: 6px 14px; border-radius: 8px; border: 1.5px solid #00C8FF; text-decoration: none;">Carregando link do trailer...</a>
-    </div>
-    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-      <button id="btn-copy-link-bar" type="button" style="background: #00C8FF; color: #000000; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 13px; text-transform: uppercase;">
-        📋 Copiar Link p/ Linktree / WhatsApp
-      </button>
-      <button id="btn-copy-whatsapp-msg" type="button" style="background: #FFE600; color: #000000; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 13px; text-transform: uppercase;">
-        💬 Copiar Mensagem p/ Fixar no WhatsApp
-      </button>
-      <a href="/link" style="color: #CBD5E1; font-size: 12px; font-weight: 700; text-decoration: underline;">
-        Central do Link
-      </a>
-    </div>
-  </div>
 
   <!-- QUADRO KANBAN DA COZINHA -->
   <main class="kitchen-board">
@@ -221,6 +208,6 @@
   <!-- Socket.io -->
   <script src="/socket.io/socket.io.js"></script>
   <!-- Admin Script -->
-  <script src="/js/admin.js?v=20"></script>
+  <script src="/js/admin.js?v=30"></script>
 </body>
 </html>
