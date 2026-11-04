@@ -165,6 +165,16 @@ app.post('/api/config', (req, res) => {
   res.json({ success: true, config });
 });
 
+// Toggle Store Open / Closed
+app.post('/api/config/toggle-open', (req, res) => {
+  config.isOpen = typeof config.isOpen === 'boolean' ? !config.isOpen : false;
+  saveJson(CONFIG_FILE, config);
+  io.emit('store_status_changed', { isOpen: config.isOpen });
+  io.emit('config_updated', config);
+  console.log(`[LOJA] Status alterado para: ${config.isOpen ? 'ABERTA 🟢' : 'FECHADA 🔴'}`);
+  res.json({ success: true, isOpen: config.isOpen });
+});
+
 // Menu
 app.get('/api/menu', (req, res) => {
   res.json(menu);
@@ -194,6 +204,10 @@ app.get('/api/orders/:id', (req, res) => {
 });
 
 app.post('/api/orders', (req, res) => {
+  if (config.isOpen === false) {
+    return res.status(403).json({ error: 'Já encerramos nossos pedidos por hoje! Agradecemos o carinho e te esperamos na próxima fornada quentinha! ❤️' });
+  }
+
   const { customerName, vehicleInfo, customerPhone, items, paymentMethod, notes, total } = req.body;
 
   if (!customerName || !items || !items.length) {
