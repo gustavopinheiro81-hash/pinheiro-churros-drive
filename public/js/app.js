@@ -240,7 +240,7 @@ function renderMenuItems() {
         `;
       } else {
         priceBadgesHtml = `
-          <div class="product-price" style="margin-top: 6px; font-weight: 900; font-size: 16px; color: var(--brand-yellow);">${formatBRL(item.price)}</div>
+          <div class="product-price" style="margin-top: 6px; font-weight: 900; font-size: 16px; color: var(--brand-pink);">${formatBRL(item.price)}</div>
         `;
       }
 
