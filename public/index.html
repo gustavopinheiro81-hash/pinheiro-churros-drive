@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Cardápio Drive-Thru - Churros Express</title>
+  <title>Cardápio Drive-Thru - Pinheiro Churros</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🥖</text></svg>">
+  <link rel="icon" href="/img/logo.jpg">
 </head>
 <body>
 
   <!-- VIEW 1: CARDÁPIO (MENU & PEDIDO) -->
   <div id="view-menu" class="container">
-    <header class="trailer-header">
+    <header class="trailer-header" style="text-align: center; padding: 22px 16px 18px;">
+      <div style="display: flex; justify-content: center; margin-bottom: 12px;">
+        <img src="/img/logo.jpg" alt="Pinheiro Churros" style="max-height: 160px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 6px 20px rgba(255, 51, 102, 0.45)); border-radius: 12px;">
+      </div>
       <div class="header-badge">
         <span class="status-dot"></span>
         <span id="header-status-text">Trailer Aberto • Fritando na Hora</span>
       </div>
-      <h1 class="trailer-title" id="trailer-name-display">Churros Express</h1>
-      <p class="trailer-tagline" id="trailer-tagline-display">Peça do seu carro e retire no balcão quando estiver pronto!</p>
+      <p class="trailer-tagline" id="trailer-tagline-display" style="margin-top: 10px;">Peça do seu carro e retire no balcão quando estiver pronto!</p>
     </header>
 
     <!-- Banner Drive Thru -->
@@ -53,12 +55,15 @@
 
   <!-- VIEW 2: ACOMPANHAMENTO EM TEMPO REAL (TRACKER) -->
   <div id="view-tracker" class="container" style="display: none;">
-    <header class="trailer-header" style="text-align: center;">
+    <header class="trailer-header" style="text-align: center; padding: 20px 16px 16px;">
+      <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <img src="/img/logo.jpg" alt="Pinheiro Churros" style="max-height: 100px; width: auto; object-fit: contain; border-radius: 10px;">
+      </div>
       <div class="header-badge">
         <span class="status-dot"></span>
         <span>Acompanhamento em Tempo Real</span>
       </div>
-      <h1 class="trailer-title">Status do seu Pedido</h1>
+      <h1 class="trailer-title" style="margin-top: 8px;">Status do seu Pedido</h1>
       <p class="trailer-tagline">Fique de olho na tela! Avisaremos assim que estiver quentinho.</p>
     </header>
 
