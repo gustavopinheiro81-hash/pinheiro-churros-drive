@@ -195,10 +195,14 @@ async function loadOrders() {
 
 // Render Kanban Board
 function renderBoard() {
+  const todayStr = new Date().toISOString().slice(0, 10);
+
   const novos = allOrders.filter(o => o.status === 'recebido');
   const preparo = allOrders.filter(o => o.status === 'preparo');
   const prontos = allOrders.filter(o => o.status === 'pronto');
-  const entregues = allOrders.filter(o => o.status === 'entregue');
+  
+  // Entregues de hoje (reseta todo dia para não poluir a tela)
+  const entregues = allOrders.filter(o => o.status === 'entregue' && o.createdAt && o.createdAt.startsWith(todayStr));
 
   // Counts
   countNovos.textContent = novos.length;
@@ -206,9 +210,10 @@ function renderBoard() {
   countProntos.textContent = prontos.length;
   countEntregues.textContent = entregues.length;
 
-  // Stats today
-  statCountToday.textContent = allOrders.length;
-  const totalRevenue = allOrders
+  // Stats today (apenas pedidos de hoje)
+  const todayOrders = allOrders.filter(o => o.createdAt && o.createdAt.startsWith(todayStr));
+  statCountToday.textContent = todayOrders.length;
+  const totalRevenue = todayOrders
     .filter(o => o.status !== 'cancelado')
     .reduce((sum, o) => sum + (Number(o.total) || 0), 0);
   statRevenueToday.textContent = formatBRL(totalRevenue);
@@ -473,4 +478,123 @@ socket.on('order_status_changed', (updatedOrder) => {
 // Request desktop notification permission on first load
 if (window.Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
   Notification.requestPermission();
+}
+
+// ====== HISTÓRICO DE VENDAS DIÁRIAS ======
+const modalHistory = document.getElementById('modal-history');
+const btnOpenHistory = document.getElementById('btn-open-history');
+const btnCloseHistory = document.getElementById('btn-close-history');
+const historyDatePicker = document.getElementById('history-date-picker');
+const btnHistoryToday = document.getElementById('btn-history-today');
+const btnHistoryYesterday = document.getElementById('btn-history-yesterday');
+
+const histTotalCount = document.getElementById('hist-total-count');
+const histTotalRevenue = document.getElementById('hist-total-revenue');
+const histPixTotal = document.getElementById('hist-pix-total');
+const histOtherTotal = document.getElementById('hist-other-total');
+const historyOrdersList = document.getElementById('history-orders-list');
+
+function getLocalDateString(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function loadHistoryForDate(dateStr) {
+  if (!dateStr) return;
+  const filtered = allOrders.filter(o => o.createdAt && o.createdAt.startsWith(dateStr));
+
+  histTotalCount.textContent = filtered.length;
+
+  const validOrders = filtered.filter(o => o.status !== 'cancelado');
+  const total = validOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  histTotalRevenue.textContent = formatBRL(total);
+
+  const pixTotal = validOrders
+    .filter(o => o.paymentMethod === 'Pix')
+    .reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  histPixTotal.textContent = formatBRL(pixTotal);
+
+  const otherTotal = validOrders
+    .filter(o => o.paymentMethod !== 'Pix')
+    .reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  histOtherTotal.textContent = formatBRL(otherTotal);
+
+  historyOrdersList.innerHTML = '';
+  if (filtered.length === 0) {
+    historyOrdersList.innerHTML = '<div style="text-align: center; color: #94A3B8; padding: 20px;">Nenhum pedido registrado nesta data.</div>';
+    return;
+  }
+
+  filtered.forEach(o => {
+    const timeStr = o.createdAt ? new Date(o.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '--:--';
+    const row = document.createElement('div');
+    row.style.display = 'flex';
+    row.style.justifyContent = 'space-between';
+    row.style.alignItems = 'center';
+    row.style.padding = '8px 10px';
+    row.style.borderBottom = '1px solid #1E293B';
+    row.style.fontSize = '13px';
+
+    const itemsSummary = (o.items || []).map(i => `${i.quantity}x ${i.name}`).join(', ');
+
+    row.innerHTML = `
+      <div>
+        <div>
+          <strong style="color: #00C8FF;">${o.orderNumber}</strong> • 
+          <strong>${o.customerName}</strong> 
+          <span style="color: #94A3B8; font-size: 11px;">(${o.vehicleInfo})</span>
+          <span style="background: #1E293B; color: #CBD5E1; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 6px;">${timeStr}</span>
+        </div>
+        <div style="color: #94A3B8; font-size: 11px; margin-top: 2px;">${itemsSummary}</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="color: #FFE600; font-weight: 800;">${formatBRL(o.total)}</div>
+        <div style="font-size: 10px; color: ${o.paymentMethod === 'Pix' ? '#34D399' : '#F59E0B'};">${o.paymentMethod}</div>
+      </div>
+    `;
+    historyOrdersList.appendChild(row);
+  });
+}
+
+if (btnOpenHistory) {
+  btnOpenHistory.onclick = () => {
+    // Default to yesterday or today
+    const today = new Date();
+    const todayStr = getLocalDateString(today);
+    historyDatePicker.value = todayStr;
+    loadHistoryForDate(todayStr);
+    modalHistory.classList.add('active');
+  };
+}
+
+if (btnCloseHistory) {
+  btnCloseHistory.onclick = () => {
+    modalHistory.classList.remove('active');
+  };
+}
+
+if (historyDatePicker) {
+  historyDatePicker.onchange = () => {
+    loadHistoryForDate(historyDatePicker.value);
+  };
+}
+
+if (btnHistoryToday) {
+  btnHistoryToday.onclick = () => {
+    const todayStr = getLocalDateString(new Date());
+    historyDatePicker.value = todayStr;
+    loadHistoryForDate(todayStr);
+  };
+}
+
+if (btnHistoryYesterday) {
+  btnHistoryYesterday.onclick = () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = getLocalDateString(yesterday);
+    historyDatePicker.value = yesterdayStr;
+    loadHistoryForDate(yesterdayStr);
+  };
 }

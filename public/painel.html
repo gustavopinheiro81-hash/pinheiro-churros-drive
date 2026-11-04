@@ -44,6 +44,10 @@
         <span>🔗 Copiar Link dos Pedidos</span>
       </button>
 
+      <button class="btn-kitchen-action" id="btn-open-history" style="background: #0284C7; border-color: #0284C7; color: white; font-weight: 800;">
+        <span>📊 Vendas Anteriores</span>
+      </button>
+
       <button class="btn-kitchen-action" id="btn-open-settings">
         <span>⚙ Configurações</span>
       </button>
@@ -162,6 +166,55 @@
           Salvar Configurações
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE HISTÓRICO DE VENDAS -->
+  <div id="modal-history" class="modal-overlay">
+    <div class="modal-sheet" style="background: #181920; color: white; max-width: 650px; border: 2px solid #00C8FF;">
+      <div class="modal-header" style="border-color: #2B2F3E;">
+        <div>
+          <h3 class="modal-title" style="color: #FFE600; font-size: 18px; font-weight: 900;">📊 Relatório de Vendas por Dia</h3>
+          <p style="font-size: 12px; color: #94A3B8; margin-top: 2px;">Consulte quanto você faturou em qualquer data anterior</p>
+        </div>
+        <button class="btn-close-modal" id="btn-close-history" style="background: #2B2F3E; color: white;">&times;</button>
+      </div>
+
+      <div style="padding: 16px 0;">
+        <!-- Seletor de Data -->
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; background: #0A0A0C; padding: 12px 16px; border-radius: 10px; border: 1px solid #2B2F3E;">
+          <label for="history-date-picker" style="font-size: 14px; font-weight: 800; color: #FFFFFF;">Escolha a Data:</label>
+          <input type="date" id="history-date-picker" style="background: #1E293B; color: #FFFFFF; border: 1.5px solid #00C8FF; padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer;">
+          <button id="btn-history-today" type="button" style="background: #2B2F3E; color: #CBD5E1; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;">Hoje</button>
+          <button id="btn-history-yesterday" type="button" style="background: #2B2F3E; color: #CBD5E1; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;">Ontem</button>
+        </div>
+
+        <!-- Cards de Métricas do Dia -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 18px;">
+          <div style="background: #0A0A0C; padding: 12px; border-radius: 10px; border: 1px solid #2B2F3E; text-align: center;">
+            <div style="font-size: 11px; color: #94A3B8; font-weight: 700; text-transform: uppercase;">Total Pedidos</div>
+            <div id="hist-total-count" style="font-size: 22px; font-weight: 900; color: #00C8FF; margin-top: 4px;">0</div>
+          </div>
+          <div style="background: #0A0A0C; padding: 12px; border-radius: 10px; border: 1px solid #2B2F3E; text-align: center;">
+            <div style="font-size: 11px; color: #94A3B8; font-weight: 700; text-transform: uppercase;">Total Faturado</div>
+            <div id="hist-total-revenue" style="font-size: 22px; font-weight: 900; color: #FFE600; margin-top: 4px;">R$ 0,00</div>
+          </div>
+          <div style="background: #0A0A0C; padding: 12px; border-radius: 10px; border: 1px solid #2B2F3E; text-align: center;">
+            <div style="font-size: 11px; color: #94A3B8; font-weight: 700; text-transform: uppercase;">💳 Em Pix</div>
+            <div id="hist-pix-total" style="font-size: 16px; font-weight: 800; color: #34D399; margin-top: 4px;">R$ 0,00</div>
+          </div>
+          <div style="background: #0A0A0C; padding: 12px; border-radius: 10px; border: 1px solid #2B2F3E; text-align: center;">
+            <div style="font-size: 11px; color: #94A3B8; font-weight: 700; text-transform: uppercase;">💵 Dinheiro/Cartão</div>
+            <div id="hist-other-total" style="font-size: 16px; font-weight: 800; color: #F59E0B; margin-top: 4px;">R$ 0,00</div>
+          </div>
+        </div>
+
+        <!-- Lista de Pedidos do Dia -->
+        <h4 style="font-size: 13px; font-weight: 800; color: #00C8FF; text-transform: uppercase; margin-bottom: 8px;">Lista de Pedidos do Dia:</h4>
+        <div id="history-orders-list" style="max-height: 280px; overflow-y: auto; background: #0A0A0C; border: 1px solid #2B2F3E; border-radius: 10px; padding: 10px;">
+          <div style="text-align: center; color: #94A3B8; padding: 20px;">Nenhum pedido encontrado nessa data</div>
+        </div>
+      </div>
     </div>
   </div>
 
