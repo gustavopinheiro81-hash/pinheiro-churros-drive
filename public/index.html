@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cardápio Drive-Thru - Churros Express</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🥖</text></svg>">
+</head>
+<body>
+
+  <!-- VIEW 1: CARDÁPIO (MENU & PEDIDO) -->
+  <div id="view-menu" class="container">
+    <header class="trailer-header">
+      <div class="header-badge">
+        <span class="status-dot"></span>
+        <span id="header-status-text">Trailer Aberto • Fritando na Hora</span>
+      </div>
+      <h1 class="trailer-title" id="trailer-name-display">Churros Express</h1>
+      <p class="trailer-tagline" id="trailer-tagline-display">Peça do seu carro e retire no balcão quando estiver pronto!</p>
+    </header>
+
+    <!-- Banner Drive Thru -->
+    <div class="car-banner">
+      <span class="car-banner-icon">🚗</span>
+      <div>
+        <strong>Evite filas!</strong> Faça seu pedido aqui pelo celular, aguarde confortavelmente no seu carro e venha retirar no balcão assim que o pedido ficar pronto.
+      </div>
+    </div>
+
+    <!-- Categorias -->
+    <nav class="category-nav" id="category-nav"></nav>
+
+    <!-- Lista de Itens do Cardápio -->
+    <main id="menu-items-container">
+      <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+        Carregando delícias quentinhas... 🥖
+      </div>
+    </main>
+
+    <!-- Barra Fixa do Carrinho -->
+    <div id="cart-bar" class="cart-floating-bar hidden">
+      <div class="cart-summary-text">
+        <span class="cart-items-count" id="cart-bar-count">0 itens</span>
+        <span class="cart-total-value" id="cart-bar-total">R$ 0,00</span>
+      </div>
+      <button class="btn-view-order" id="btn-open-cart">
+        <span>Ver Pedido</span>
+        <span>🛒</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW 2: ACOMPANHAMENTO EM TEMPO REAL (TRACKER) -->
+  <div id="view-tracker" class="container" style="display: none;">
+    <header class="trailer-header" style="text-align: center;">
+      <div class="header-badge">
+        <span class="status-dot"></span>
+        <span>Acompanhamento em Tempo Real</span>
+      </div>
+      <h1 class="trailer-title">Status do seu Pedido</h1>
+      <p class="trailer-tagline">Fique de olho na tela! Avisaremos assim que estiver quentinho.</p>
+    </header>
+
+    <div class="tracker-card">
+      <div class="tracker-order-badge" id="track-order-number">#--</div>
+      <h2 class="tracker-customer-name" id="track-customer-name">Carregando...</h2>
+      <div>
+        <span class="tracker-car-tag" id="track-vehicle-tag">🚗 Carregando veículo...</span>
+      </div>
+
+      <!-- Hero de Status Dinâmico -->
+      <div id="status-hero" class="status-hero status-recebido">
+        <div class="status-hero-icon" id="status-hero-icon">⏳</div>
+        <div class="status-hero-title" id="status-hero-title">Pedido Recebido!</div>
+        <p class="status-hero-msg" id="status-hero-msg">Seu pedido já chegou no trailer e logo entrará na fritadeira.</p>
+      </div>
+
+      <!-- Linha do Tempo de Status -->
+      <div class="tracker-timeline">
+        <div class="timeline-step" id="step-recebido">
+          <div class="timeline-bubble">1</div>
+          <span class="timeline-label">Recebido</span>
+        </div>
+        <div class="timeline-step" id="step-preparo">
+          <div class="timeline-bubble">2</div>
+          <span class="timeline-label">No Óleo</span>
+        </div>
+        <div class="timeline-step" id="step-pronto">
+          <div class="timeline-bubble">3</div>
+          <span class="timeline-label">Pronto!</span>
+        </div>
+        <div class="timeline-step" id="step-entregue">
+          <div class="timeline-bubble">4</div>
+          <span class="timeline-label">Entregue</span>
+        </div>
+      </div>
+
+      <!-- Caixa de Pix (se aplicável) -->
+      <div id="tracker-pix-box" class="pix-box" style="display: none;">
+        <div class="pix-title">💳 Pagamento via Pix:</div>
+        <div class="pix-key-display">
+          <span id="tracker-pix-key">chave@pix.com</span>
+          <button class="btn-copy-pix" id="btn-copy-pix-tracker" type="button">Copiar Pix</button>
+        </div>
+        <small style="color: #166534; display: block; margin-top: 6px;">Pague antes de retirar no balcão e mostre o comprovante!</small>
+      </div>
+
+      <!-- Resumo dos Itens Pedidos -->
+      <div style="text-align: left; background: var(--brand-surface-card); border-radius: var(--radius-md); padding: 16px; margin-top: 18px; border: 1.5px solid var(--brand-border);">
+        <h4 style="font-size: 13px; font-weight: 800; margin-bottom: 10px; color: var(--brand-cyan); text-transform: uppercase;">ITENS DO SEU PEDIDO:</h4>
+        <div id="tracker-items-list"></div>
+        <div style="display: flex; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--brand-border); font-weight: 800;">
+          <span>Total:</span>
+          <span id="tracker-total-val" style="color: var(--brand-yellow); font-size: 18px; font-weight: 900;">R$ 0,00</span>
+        </div>
+      </div>
+
+      <button id="btn-new-order" class="btn-primary-block" style="background: var(--brand-pink); display: none; margin-top: 20px;">
+        Fazer Outro Pedido
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL 1: OPÇÕES DO CHURROS (TAMANHO NORMAL / BABY E CONFEITOS) -->
+  <div id="modal-options" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="modal-product-name">Sabor do Churro</h3>
+          <p id="modal-product-desc" style="font-size: 13px; color: var(--text-muted); margin-top: 2px;"></p>
+        </div>
+        <button class="btn-close-modal" id="btn-close-options">&times;</button>
+      </div>
+
+      <div id="options-form">
+        <!-- 1. Escolha do Tamanho (Normal vs Baby) -->
+        <div class="option-group" id="group-sizes">
+          <div class="option-group-title">
+            <span>1. Escolha o Tamanho</span>
+            <span class="option-req">Obrigatório</span>
+          </div>
+          <div class="size-selector-grid">
+            <div class="size-card selected" id="card-size-normal" onclick="selectChurroSize('normal')">
+              <div>
+                <div class="size-card-title">🥖 Churros Normal</div>
+                <div class="size-card-desc">Tamanho tradicional recheado</div>
+              </div>
+              <div class="size-card-price" id="modal-price-normal">R$ 0,00</div>
+            </div>
+
+            <div class="size-card" id="card-size-baby" onclick="selectChurroSize('baby')">
+              <div>
+                <div class="size-card-title">👶 Churros Baby</div>
+                <div class="size-card-desc">Metade do tamanho</div>
+              </div>
+              <div>
+                <div class="size-card-price" id="modal-price-baby">R$ 0,00</div>
+                <span class="size-card-badge">50% do valor</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Escolha dos Confeitos Inclusos -->
+        <div class="option-group" id="group-toppings">
+          <div class="option-group-title">
+            <span>2. Confeitos Inclusos</span>
+            <span class="option-req" id="toppings-badge" style="background: #E0E7FF; color: #4338CA;">Escolha até 2</span>
+          </div>
+          <div class="toppings-grid" id="toppings-list"></div>
+        </div>
+
+        <!-- 3. Observações -->
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label" for="item-notes">Observação para este item:</label>
+          <input type="text" id="item-notes" class="form-input" placeholder="Ex: sem canela, bem crocante, etc.">
+        </div>
+
+        <!-- 4. Quantidade -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 16px 0 10px; background: var(--surface-alt); padding: 10px 16px; border-radius: var(--radius-md);">
+          <span style="font-weight: 700; font-size: 14px;">Quantidade:</span>
+          <div class="qty-stepper" style="margin: 0;">
+            <button class="qty-btn" id="qty-minus" type="button">-</button>
+            <span class="qty-value" id="qty-display">1</span>
+            <button class="qty-btn" id="qty-plus" type="button">+</button>
+          </div>
+        </div>
+
+        <button class="btn-primary-block" id="btn-add-to-cart-confirm">
+          <span>Adicionar ao Pedido</span>
+          <span id="modal-add-total">R$ 0,00</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CARRINHO E DADOS DO CLIENTE (CHECKOUT) -->
+  <div id="modal-checkout" class="modal-overlay">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 class="modal-title">Seu Pedido</h3>
+        <button class="btn-close-modal" id="btn-close-checkout">&times;</button>
+      </div>
+
+      <!-- Itens do Carrinho -->
+      <div id="checkout-items-list" style="margin-bottom: 16px;"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1.5px solid var(--border); margin-bottom: 16px;">
+        <span style="font-size: 16px; font-weight: 700;">Total do Pedido:</span>
+        <span id="checkout-total-val" style="font-size: 22px; font-weight: 900; color: var(--brand-yellow);">R$ 0,00</span>
+      </div>
+
+      <!-- Formulário de Identificação do Carro -->
+      <form id="form-checkout">
+        <div class="form-group">
+          <label class="form-label" for="input-customer-name">Seu Nome: *</label>
+          <input type="text" id="input-customer-name" class="form-input" placeholder="Ex: Lucas Silva" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-vehicle">Identificação do seu Carro / Vaga: *</label>
+          <input type="text" id="input-vehicle" class="form-input car-input-highlight" placeholder="Ex: Onix Branco placa 4567, Gol Vermelho, etc." required>
+          <small style="color: var(--text-muted); font-size: 11px; display: block; margin-top: 4px;">
+            🚗 É assim que vamos saber quem é você para preparar tudo certinho!
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-phone">WhatsApp / Celular (Opcional):</label>
+          <input type="tel" id="input-phone" class="form-input" placeholder="(00) 90000-0000">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-payment">Forma de Pagamento: *</label>
+          <select id="input-payment" class="form-select">
+            <option value="Pix">Pix (Chave exibida após confirmar)</option>
+            <option value="Cartão de Crédito">Cartão de Crédito (na retirada)</option>
+            <option value="Cartão de Débito">Cartão de Débito (na retirada)</option>
+            <option value="Dinheiro">Dinheiro (na retirada)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-order-notes">Observação Geral do Pedido:</label>
+          <input type="text" id="input-order-notes" class="form-input" placeholder="Ex: Capricha no recheio!">
+        </div>
+
+        <button type="submit" class="btn-primary-block" id="btn-submit-order">
+          <span>🚀 Enviar Pedido para o Trailer</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- App Script -->
+  <script src="/js/app.js"></script>
+</body>
+</html>

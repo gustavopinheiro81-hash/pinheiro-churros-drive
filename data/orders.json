@@ -1,0 +1,251 @@
+[
+  {
+    "id": "ord_1793814317580_36",
+    "orderNumber": "#05",
+    "customerName": "Gustavo",
+    "vehicleInfo": "Tracker",
+    "customerPhone": "",
+    "items": [
+      {
+        "id": "trad-doce-de-leite_1793814265633",
+        "name": "Doce de Leite",
+        "isChurro": true,
+        "size": "normal",
+        "sizeLabel": "Normal",
+        "unitPrice": 12,
+        "quantity": 1,
+        "totalPrice": 12,
+        "toppings": [
+          "Granulado de Chocolate"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "trad-chocolate_1793814275187",
+        "name": "Chocolate",
+        "isChurro": true,
+        "size": "baby",
+        "sizeLabel": "Baby",
+        "unitPrice": 6,
+        "quantity": 1,
+        "totalPrice": 6,
+        "toppings": [
+          "Granulado Colorido"
+        ],
+        "notes": ""
+      }
+    ],
+    "paymentMethod": "Cartão de Crédito",
+    "notes": "",
+    "total": 18,
+    "status": "entregue",
+    "createdAt": "2026-11-04T17:45:17.580Z",
+    "statusHistory": [
+      {
+        "status": "recebido",
+        "time": "2026-11-04T17:45:17.580Z"
+      },
+      {
+        "status": "preparo",
+        "time": "2026-11-04T17:45:39.005Z"
+      },
+      {
+        "status": "pronto",
+        "time": "2026-11-04T17:46:02.096Z"
+      },
+      {
+        "status": "entregue",
+        "time": "2026-11-04T17:46:10.719Z"
+      }
+    ],
+    "updatedAt": "2026-11-04T17:46:10.719Z"
+  },
+  {
+    "id": "ord_1793807652100_232",
+    "orderNumber": "#04",
+    "customerName": "Joao",
+    "vehicleInfo": "Gol",
+    "customerPhone": "",
+    "items": [
+      {
+        "id": "churro-tradicional_1793807626872",
+        "name": "Churro Tradicional Crocante",
+        "unitPrice": 13,
+        "quantity": 1,
+        "totalPrice": 13,
+        "filling": "Nutella Original",
+        "toppings": [
+          "Amendoim Triturado Crocante"
+        ],
+        "notes": ""
+      }
+    ],
+    "paymentMethod": "Cartão de Débito",
+    "notes": "",
+    "total": 13,
+    "status": "entregue",
+    "createdAt": "2026-11-04T15:54:12.100Z",
+    "statusHistory": [
+      {
+        "status": "recebido",
+        "time": "2026-11-04T15:54:12.100Z"
+      },
+      {
+        "status": "preparo",
+        "time": "2026-11-04T15:54:21.750Z"
+      },
+      {
+        "status": "pronto",
+        "time": "2026-11-04T15:54:28.182Z"
+      },
+      {
+        "status": "entregue",
+        "time": "2026-11-04T15:54:34.453Z"
+      }
+    ],
+    "updatedAt": "2026-11-04T15:54:34.453Z"
+  },
+  {
+    "id": "ord_1793807355770_345",
+    "orderNumber": "#03",
+    "customerName": "Mariazinha",
+    "vehicleInfo": "Gol",
+    "customerPhone": "",
+    "items": [
+      {
+        "id": "coca-cola_1793807322882",
+        "name": "Coca-Cola Lata 350ml",
+        "unitPrice": 6,
+        "quantity": 1,
+        "totalPrice": 6,
+        "filling": null,
+        "toppings": [],
+        "notes": ""
+      },
+      {
+        "id": "churro-tradicional_1793807338761",
+        "name": "Churro Tradicional Crocante",
+        "unitPrice": 13,
+        "quantity": 1,
+        "totalPrice": 13,
+        "filling": "Nutella Original",
+        "toppings": [],
+        "notes": ""
+      }
+    ],
+    "paymentMethod": "Pix",
+    "notes": "",
+    "total": 19,
+    "status": "entregue",
+    "createdAt": "2026-11-04T15:49:15.770Z",
+    "statusHistory": [
+      {
+        "status": "recebido",
+        "time": "2026-11-04T15:49:15.770Z"
+      },
+      {
+        "status": "preparo",
+        "time": "2026-11-04T15:49:59.584Z"
+      },
+      {
+        "status": "pronto",
+        "time": "2026-11-04T15:50:01.489Z"
+      },
+      {
+        "status": "entregue",
+        "time": "2026-11-04T15:50:07.671Z"
+      }
+    ],
+    "updatedAt": "2026-11-04T15:50:07.671Z"
+  },
+  {
+    "id": "ord_1793807159200_370",
+    "orderNumber": "#02",
+    "customerName": "Tais aparecida",
+    "vehicleInfo": "Onix rosa",
+    "customerPhone": "",
+    "items": [
+      {
+        "id": "churro-tradicional_1793807122743",
+        "name": "Churro Tradicional Crocante",
+        "unitPrice": 10,
+        "quantity": 2,
+        "totalPrice": 20,
+        "filling": "Chocolate Brigadeiro Artesanal",
+        "toppings": [
+          "Amendoim Triturado Crocante"
+        ],
+        "notes": "Teste 2222"
+      }
+    ],
+    "paymentMethod": "Cartão de Débito",
+    "notes": "Teste do gugu",
+    "total": 20,
+    "status": "entregue",
+    "createdAt": "2026-11-04T15:45:59.200Z",
+    "statusHistory": [
+      {
+        "status": "recebido",
+        "time": "2026-11-04T15:45:59.200Z"
+      },
+      {
+        "status": "preparo",
+        "time": "2026-11-04T15:46:20.183Z"
+      },
+      {
+        "status": "pronto",
+        "time": "2026-11-04T15:46:30.217Z"
+      },
+      {
+        "status": "entregue",
+        "time": "2026-11-04T15:46:45.899Z"
+      }
+    ],
+    "updatedAt": "2026-11-04T15:46:45.899Z"
+  },
+  {
+    "id": "ord_1793806586713_801",
+    "orderNumber": "#01",
+    "customerName": "Gustavo pinheiro",
+    "vehicleInfo": "Hb20 1204",
+    "customerPhone": "",
+    "items": [
+      {
+        "id": "churro-tradicional_1793806513491",
+        "name": "Churro Tradicional Crocante",
+        "unitPrice": 13,
+        "quantity": 1,
+        "totalPrice": 13,
+        "filling": "Nutella Original",
+        "toppings": [
+          "Granulado de Chocolate"
+        ],
+        "notes": ""
+      }
+    ],
+    "paymentMethod": "Cartão de Crédito",
+    "notes": "Teste dessa pouha",
+    "total": 13,
+    "status": "entregue",
+    "createdAt": "2026-11-04T15:36:26.713Z",
+    "statusHistory": [
+      {
+        "status": "recebido",
+        "time": "2026-11-04T15:36:26.713Z"
+      },
+      {
+        "status": "preparo",
+        "time": "2026-11-04T15:36:55.882Z"
+      },
+      {
+        "status": "pronto",
+        "time": "2026-11-04T15:37:24.163Z"
+      },
+      {
+        "status": "entregue",
+        "time": "2026-11-04T15:37:47.937Z"
+      }
+    ],
+    "updatedAt": "2026-11-04T15:37:47.937Z"
+  }
+]

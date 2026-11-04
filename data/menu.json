@@ -1,0 +1,109 @@
+{
+  "categories": [
+    {
+      "id": "tradicionais",
+      "name": "Sabores Tradicionais",
+      "description": "Churros clássicos irresistíveis • Normal R$ 12 | Baby R$ 6",
+      "tag": "R$ 12,00 / R$ 6,00",
+      "items": [
+        { "id": "trad-doce-de-leite", "name": "Doce de Leite", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-chocolate", "name": "Chocolate", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-beijinho", "name": "Beijinho", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-goiabada", "name": "Goiabada", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-doce-leite-choc", "name": "Doce de Leite + Chocolate", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-beijinho-doce-leite", "name": "Beijinho + Doce de Leite", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-beijinho-choc", "name": "Beijinho + Chocolate", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-goiabada-doce-leite", "name": "Goiabada + Doce de Leite", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-goiabada-choc", "name": "Goiabada + Chocolate", "price": 12.00, "priceBaby": 6.00, "hasSize": true },
+        { "id": "trad-goiabada-beijinho", "name": "Goiabada + Beijinho", "price": 12.00, "priceBaby": 6.00, "hasSize": true }
+      ]
+    },
+    {
+      "id": "especiais",
+      "name": "Sabores Especiais",
+      "description": "Combinações com Ninho e Morango • Normal R$ 16 | Baby R$ 8",
+      "tag": "R$ 16,00 / R$ 8,00",
+      "items": [
+        { "id": "esp-ninho", "name": "Brigadeiro de Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango", "name": "Doce de Morango", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-doce-leite", "name": "Brigadeiro de Leite Ninho + Doce de Leite", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-choc", "name": "Brigadeiro de Leite Ninho + Chocolate", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-beijinho", "name": "Brigadeiro de Leite Ninho + Beijinho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-goiabada", "name": "Brigadeiro de Leite Ninho + Goiabada", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-ninho", "name": "Doce de Morango + Brigadeiro de Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-doce-leite", "name": "Doce de Morango + Doce de Leite", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-choc", "name": "Doce de Morango + Chocolate", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-beijinho", "name": "Doce de Morango + Beijinho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-goiabada", "name": "Doce de Morango + Goiabada", "price": 16.00, "priceBaby": 8.00, "hasSize": true }
+      ]
+    },
+    {
+      "id": "agridoces",
+      "name": "Sabores Agridoces",
+      "description": "Com Catupiry cremoso original • Normal a partir de R$ 18 | Baby a partir de R$ 9",
+      "tag": "R$ 18,00 / R$ 9,00",
+      "items": [
+        { "id": "agr-mineirinho", "name": "Mineirinho", "description": "Doce de Leite + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
+        { "id": "agr-tres-desejos", "name": "Três Desejos", "description": "Doce de Leite + Chocolate + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
+        { "id": "agr-dois-amores", "name": "Dois Amores", "description": "Chocolate + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
+        { "id": "agr-romeu-julieta", "name": "Romeu e Julieta", "description": "Goiabada + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
+        { "id": "agr-casadinho", "name": "Casadinho", "description": "Goiabada + Doce de Leite + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
+        { "id": "agr-nutella-catupiry", "name": "Nutella + Catupiry", "description": "Nutella original com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "Mega Agridoce" },
+        { "id": "agr-dadinho-catupiry", "name": "Dadinho + Catupiry", "description": "Dadinho cremoso com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "Mega Agridoce" }
+      ]
+    },
+    {
+      "id": "mega-especiais",
+      "name": "Sabores Mega Especiais",
+      "description": "Nutella, Dadinho e Pistache • Normal R$ 20 | Baby R$ 10",
+      "tag": "R$ 20,00 / R$ 10,00",
+      "items": [
+        { "id": "mega-nutella", "name": "Nutella Original", "price": 20.00, "priceBaby": 10.00, "hasSize": true, "badge": "Top Vendas" },
+        { "id": "mega-dadinho", "name": "Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-pistache", "name": "Pistache", "price": 20.00, "priceBaby": 10.00, "hasSize": true, "badge": "NOVIDADE! ✨" },
+        { "id": "mega-doce-leite-nutella", "name": "Doce de Leite + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-beijinho-nutella", "name": "Beijinho + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-morango-nutella", "name": "Doce de Morango + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-ninho-nutella", "name": "Brigadeiro de Leite Ninho + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-dadinho-nutella", "name": "Dadinho Cremoso + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-ninho-dadinho", "name": "Brigadeiro de Leite Ninho + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-morango-dadinho", "name": "Doce de Morango + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true }
+      ]
+    },
+    {
+      "id": "gourmet",
+      "name": "Sabores Gourmet",
+      "description": "Com bombons e wafers premium • Normal R$ 25 | Baby R$ 12,50",
+      "tag": "R$ 25,00 / R$ 12,50",
+      "items": [
+        { "id": "gour-sonho-valsa", "name": "Sonho de Valsa", "description": "Dadinho + Nutella + 2 Bombons", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" },
+        { "id": "gour-ouro-branco", "name": "Ouro Branco", "description": "Nutella + 2 Bombons", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" },
+        { "id": "gour-kinder-bueno", "name": "Kinder Bueno", "description": "Creme Bueno + 1 Wafer Kinder Bueno", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "description": "Bebidas geladas para acompanhar",
+      "tag": "R$ 3,00 / R$ 5,00",
+      "items": [
+        { "id": "beb-agua-sem-gas", "name": "Água sem Gás", "description": "Garrafinha 500ml", "price": 3.00, "hasSize": false, "emoji": "💧" },
+        { "id": "beb-agua-com-gas", "name": "Água com Gás", "description": "Garrafinha 500ml", "price": 3.00, "hasSize": false, "emoji": "🫧" },
+        { "id": "beb-coca-normal", "name": "Coca-Cola Normal", "description": "Lata 350ml gelada", "price": 5.00, "hasSize": false, "emoji": "🥤" },
+        { "id": "beb-coca-zero", "name": "Coca-Cola Zero", "description": "Lata 350ml gelada", "price": 5.00, "hasSize": false, "emoji": "🥤" }
+      ]
+    }
+  ],
+  "toppings": [
+    { "id": "granulado-choc", "name": "Granulado de Chocolate" },
+    { "id": "granulado-colorido", "name": "Granulado Colorido" },
+    { "id": "granulado-azul", "name": "Granulado Azul" },
+    { "id": "granulado-rosa", "name": "Granulado Rosa" },
+    { "id": "amendoim", "name": "Amendoim Crocante" },
+    { "id": "pacoca", "name": "Paçoca" },
+    { "id": "chocoball", "name": "Chocoball" },
+    { "id": "leite-ninho", "name": "Leite Ninho" },
+    { "id": "coco-ralado", "name": "Coco Ralado" },
+    { "id": "cookie-choc", "name": "Cookie de Chocolate" }
+  ]
+}

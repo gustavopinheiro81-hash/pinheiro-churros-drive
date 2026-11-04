@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Trailer - Churros Drive-Thru</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🥖</text></svg>">
+</head>
+<body class="kitchen-body">
+
+  <!-- BARRA SUPERIOR DO TRAILER -->
+  <header class="kitchen-header">
+    <div class="kitchen-brand">
+      <span class="kitchen-logo-icon">🥖</span>
+      <div>
+        <h1 class="kitchen-title" id="admin-trailer-name">Painel da Cozinha • Trailer de Churros</h1>
+        <p class="kitchen-subtitle">Sistema de Pedidos Drive-Thru & Balcão em Tempo Real</p>
+      </div>
+    </div>
+
+    <!-- Estatísticas e Controles -->
+    <div class="kitchen-controls">
+      <div class="stat-pill">
+        <span>Pedidos Hoje:</span>
+        <span class="stat-value" id="stat-count-today">0</span>
+      </div>
+
+      <div class="stat-pill">
+        <span>Faturado:</span>
+        <span class="stat-value" id="stat-revenue-today">R$ 0,00</span>
+      </div>
+
+      <button class="btn-kitchen-action btn-accent" id="btn-test-sound" title="Clique para testar o som do alarme">
+        <span>🔔 Testar Som</span>
+      </button>
+
+      <button class="btn-kitchen-action" id="btn-toggle-sound">
+        <span id="sound-status-icon">🔊</span>
+        <span id="sound-status-text">Som Ativo</span>
+      </button>
+
+      <button class="btn-kitchen-action" id="btn-copy-customer-link" style="background: #10B981; border-color: #10B981; color: white; font-weight: 800;">
+        <span>🔗 Copiar Link dos Pedidos</span>
+      </button>
+
+      <button class="btn-kitchen-action" id="btn-open-settings">
+        <span>⚙ Configurações</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- BARRA DE LINK RÁPIDO DO CLIENTE (SUBSTITUI O QR CODE) -->
+  <div style="background: #14151B; border-bottom: 2px solid #00C8FF; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px;">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span style="background: #FF3366; color: #FFFFFF; padding: 4px 10px; border-radius: 6px; font-weight: 900; letter-spacing: 0.5px;">🔗 LINK DOS PEDIDOS:</span>
+      <a id="header-customer-link-display" href="#" target="_blank" style="font-family: monospace; color: #00C8FF; font-weight: 900; font-size: 15px; user-select: all; background: #0A0A0C; padding: 6px 14px; border-radius: 8px; border: 1.5px solid #00C8FF; text-decoration: none;">Carregando link do trailer...</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <button id="btn-copy-link-bar" type="button" style="background: #00C8FF; color: #000000; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 13px; text-transform: uppercase;">
+        📋 Copiar Link p/ Linktree / WhatsApp
+      </button>
+      <button id="btn-copy-whatsapp-msg" type="button" style="background: #FFE600; color: #000000; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 13px; text-transform: uppercase;">
+        💬 Copiar Mensagem p/ Fixar no WhatsApp
+      </button>
+      <a href="/link" style="color: #CBD5E1; font-size: 12px; font-weight: 700; text-decoration: underline;">
+        Central do Link
+      </a>
+    </div>
+  </div>
+
+  <!-- QUADRO KANBAN DA COZINHA -->
+  <main class="kitchen-board">
+    <!-- COLUNA 1: NOVOS PEDIDOS -->
+    <div class="kitchen-col">
+      <div class="col-header col-novos">
+        <div class="col-title">
+          <span>📥 Novos Pedidos</span>
+        </div>
+        <span class="col-count" id="count-novos">0</span>
+      </div>
+      <div class="col-orders-list" id="list-novos">
+        <div class="empty-col-message">Aguardando novos pedidos...</div>
+      </div>
+    </div>
+
+    <!-- COLUNA 2: EM PREPARO -->
+    <div class="kitchen-col">
+      <div class="col-header col-preparo">
+        <div class="col-title">
+          <span>🔥 Na Fritadeira / Preparo</span>
+        </div>
+        <span class="col-count" id="count-preparo">0</span>
+      </div>
+      <div class="col-orders-list" id="list-preparo">
+        <div class="empty-col-message">Nenhum churro sendo preparado agora</div>
+      </div>
+    </div>
+
+    <!-- COLUNA 3: PRONTOS PARA RETIRADA -->
+    <div class="kitchen-col">
+      <div class="col-header col-prontos">
+        <div class="col-title">
+          <span>📢 Prontos p/ Retirada</span>
+        </div>
+        <span class="col-count" id="count-prontos">0</span>
+      </div>
+      <div class="col-orders-list" id="list-prontos">
+        <div class="empty-col-message">Nenhum pedido aguardando retirada</div>
+      </div>
+    </div>
+
+    <!-- COLUNA 4: ENTREGUES HOJE -->
+    <div class="kitchen-col">
+      <div class="col-header col-entregues">
+        <div class="col-title">
+          <span>✅ Entregues Hoje</span>
+        </div>
+        <span class="col-count" id="count-entregues">0</span>
+      </div>
+      <div class="col-orders-list" id="list-entregues">
+        <div class="empty-col-message">Histórico de pedidos entregues</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL DE CONFIGURAÇÕES -->
+  <div id="modal-settings" class="modal-overlay">
+    <div class="modal-sheet" style="background: #1E293B; color: white;">
+      <div class="modal-header" style="border-color: #334155;">
+        <h3 class="modal-title" style="color: #F8FAFC;">Configurações do Trailer</h3>
+        <button class="btn-close-modal" id="btn-close-settings" style="background: #334155; color: white;">&times;</button>
+      </div>
+
+      <form id="form-settings">
+        <div class="form-group">
+          <label class="form-label" style="color: #CBD5E1;" for="set-trailer-name">Nome do Trailer / Negócio:</label>
+          <input type="text" id="set-trailer-name" class="form-input" style="background: #0F172A; color: white; border-color: #475569;" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color: #CBD5E1;" for="set-tagline">Frase de Boas-Vindas no Celular:</label>
+          <input type="text" id="set-tagline" class="form-input" style="background: #0F172A; color: white; border-color: #475569;">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color: #CBD5E1;" for="set-pix-key">Sua Chave Pix (exibida para os clientes):</label>
+          <input type="text" id="set-pix-key" class="form-input" style="background: #0F172A; color: white; border-color: #475569;" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="color: #CBD5E1;" for="set-pix-name">Nome do Titular do Pix:</label>
+          <input type="text" id="set-pix-name" class="form-input" style="background: #0F172A; color: white; border-color: #475569;">
+        </div>
+
+        <div style="background: #0F172A; padding: 14px; border-radius: 8px; margin: 16px 0; border: 1px solid #334155;">
+          <h4 style="font-size: 13px; color: #FBBF24; margin-bottom: 4px;">Link de Acesso dos Clientes no Celular:</h4>
+          <p id="settings-client-url" style="font-family: monospace; font-size: 14px; color: #38BDF8; word-break: break-all;">Carregando...</p>
+        </div>
+
+        <button type="submit" class="btn-primary-block" style="background: #D97706;">
+          Salvar Configurações
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- Admin Script -->
+  <script src="/js/admin.js?v=20"></script>
+</body>
+</html>

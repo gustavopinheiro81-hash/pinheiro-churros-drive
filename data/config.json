@@ -1,0 +1,9 @@
+{
+  "trailerName": "Pinheiro Churros",
+  "tagline": "Peça do seu carro e retire no balcão quando estiver pronto!",
+  "pixKey": "888888888888888888888888",
+  "pixBeneficiary": "pinheiro churros",
+  "isOpen": true,
+  "estimatedWaitMin": 7,
+  "pickupInstructions": "Aguarde no carro com o celular por perto! Quando seu pedido apitar e ficar verde, é só vir até o balcão retirar."
+}
