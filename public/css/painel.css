@@ -116,6 +116,61 @@ body.kitchen-body::before {
   transform: translateY(-1px);
 }
 
+/* Botão Alternador Loja Aberta / Fechada */
+.btn-store-open {
+  background: #064E3B !important;
+  border: 1.5px solid #10B981 !important;
+  color: #ECFDF5 !important;
+  font-weight: 900 !important;
+  padding: 9px 20px !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.35) !important;
+  letter-spacing: 0.5px;
+}
+.btn-store-open:hover {
+  background: #047857 !important;
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.55) !important;
+}
+
+.btn-store-closed {
+  background: #7F1D1D !important;
+  border: 1.5px solid #EF4444 !important;
+  color: #FEF2F2 !important;
+  font-weight: 900 !important;
+  padding: 9px 20px !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.45) !important;
+  letter-spacing: 0.5px;
+}
+.btn-store-closed:hover {
+  background: #991B1B !important;
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.65) !important;
+}
+
+.store-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.store-dot.open {
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: pulse-store-open 1.8s infinite;
+}
+
+@keyframes pulse-store-open {
+  0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.store-dot.closed {
+  background: #EF4444;
+  box-shadow: 0 0 8px #EF4444;
+}
+
 /* Kanban Board Columns */
 .kitchen-board {
   display: grid;
@@ -424,15 +479,22 @@ body.kitchen-body::before {
   padding: 20px;
 }
 
-.modal-overlay.open {
-  display: flex;
+.modal-overlay.open,
+.modal-overlay.active {
+  display: flex !important;
 }
 
 .modal-sheet {
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
   border: 1px solid #334155;
   animation: modal-pop 0.2s ease-out;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1000;
 }
 
 @keyframes modal-pop {

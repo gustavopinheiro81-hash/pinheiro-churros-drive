@@ -115,7 +115,10 @@ async function loadConfig() {
     const res = await fetch('/api/config');
     currentConfig = await res.json();
     if (currentConfig.trailerName) {
-      document.getElementById('admin-trailer-name').textContent = `Painel da Cozinha • ${currentConfig.trailerName}`;
+      const trailerNameEl = document.getElementById('admin-trailer-name');
+      if (trailerNameEl) {
+        trailerNameEl.innerHTML = `PINHEIRO CHURROS <span style="color: #FF3366;">•</span> <span style="color: #00C8FF;">PAINEL DA COZINHA</span>`;
+      }
     }
 
     // Network info
@@ -131,6 +134,11 @@ async function loadConfig() {
     
     const setLinkDisplay = document.getElementById('settings-client-url');
     if (setLinkDisplay) setLinkDisplay.textContent = currentCustomerUrl;
+
+    // Atualizar botão de Loja Aberta / Fechada
+    if (typeof currentConfig.isOpen !== 'undefined') {
+      updateStoreStatusUI(currentConfig.isOpen);
+    }
   } catch (e) {
     console.error(e);
   }
@@ -181,6 +189,50 @@ const btnCopyWhatsappMsg = document.getElementById('btn-copy-whatsapp-msg');
 if (btnCopyWhatsappMsg) {
   btnCopyWhatsappMsg.onclick = function() { copyWhatsAppMessage(this); };
 }
+
+// Botão Alternador Loja Aberta / Fechada
+const btnToggleStore = document.getElementById('btn-toggle-store');
+const storeStatusDot = document.getElementById('store-status-dot');
+const storeStatusText = document.getElementById('store-status-text');
+
+function updateStoreStatusUI(isOpen) {
+  if (!btnToggleStore) return;
+  if (isOpen) {
+    btnToggleStore.className = 'btn-kitchen-action btn-store-open';
+    if (storeStatusDot) storeStatusDot.className = 'store-dot open';
+    if (storeStatusText) storeStatusText.textContent = 'LOJA ABERTA';
+    btnToggleStore.title = 'Loja Aberta e recebendo pedidos. Clique para FECHAR.';
+  } else {
+    btnToggleStore.className = 'btn-kitchen-action btn-store-closed';
+    if (storeStatusDot) storeStatusDot.className = 'store-dot closed';
+    if (storeStatusText) storeStatusText.textContent = 'LOJA FECHADA';
+    btnToggleStore.title = 'Loja Fechada (pedidos bloqueados). Clique para ABRIR.';
+  }
+}
+
+if (btnToggleStore) {
+  btnToggleStore.addEventListener('click', async () => {
+    btnToggleStore.disabled = true;
+    try {
+      const res = await fetch('/api/config/toggle-open', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        if (currentConfig) currentConfig.isOpen = data.isOpen;
+        updateStoreStatusUI(data.isOpen);
+      }
+    } catch (e) {
+      console.error('Erro ao alternar status da loja:', e);
+      alert('Não foi possível alterar o status da loja. Verifique a conexão.');
+    } finally {
+      btnToggleStore.disabled = false;
+    }
+  });
+}
+
+socket.on('store_status_changed', (data) => {
+  if (currentConfig) currentConfig.isOpen = data.isOpen;
+  updateStoreStatusUI(data.isOpen);
+});
 
 // Load Orders
 async function loadOrders() {
@@ -387,24 +439,38 @@ btnToggleSound.onclick = () => {
 };
 
 // Test Sound Button
-btnTestSound.onclick = () => {
-  playNewOrderSound();
-};
+if (btnTestSound) {
+  btnTestSound.onclick = () => {
+    playNewOrderSound();
+  };
+}
 
 // Settings Modal
-btnOpenSettings.onclick = () => {
-  if (currentConfig) {
-    document.getElementById('set-trailer-name').value = currentConfig.trailerName || '';
-    document.getElementById('set-tagline').value = currentConfig.tagline || '';
-    document.getElementById('set-pix-key').value = currentConfig.pixKey || '';
-    document.getElementById('set-pix-name').value = currentConfig.pixBeneficiary || '';
-  }
-  modalSettings.classList.add('active');
-};
+if (btnOpenSettings) {
+  btnOpenSettings.onclick = () => {
+    if (currentConfig) {
+      document.getElementById('set-trailer-name').value = currentConfig.trailerName || '';
+      document.getElementById('set-tagline').value = currentConfig.tagline || '';
+      document.getElementById('set-pix-key').value = currentConfig.pixKey || '';
+      document.getElementById('set-pix-name').value = currentConfig.pixBeneficiary || '';
+    }
+    modalSettings.classList.add('active', 'open');
+  };
+}
 
-btnCloseSettings.onclick = () => {
-  modalSettings.classList.remove('active');
-};
+if (btnCloseSettings) {
+  btnCloseSettings.onclick = () => {
+    modalSettings.classList.remove('active', 'open');
+  };
+}
+
+if (modalSettings) {
+  modalSettings.onclick = (e) => {
+    if (e.target === modalSettings) {
+      modalSettings.classList.remove('active', 'open');
+    }
+  };
+}
 
 formSettings.onsubmit = async (e) => {
   e.preventDefault();
@@ -565,13 +631,21 @@ if (btnOpenHistory) {
     const todayStr = getLocalDateString(today);
     historyDatePicker.value = todayStr;
     loadHistoryForDate(todayStr);
-    modalHistory.classList.add('active');
+    modalHistory.classList.add('active', 'open');
   };
 }
 
 if (btnCloseHistory) {
   btnCloseHistory.onclick = () => {
-    modalHistory.classList.remove('active');
+    modalHistory.classList.remove('active', 'open');
+  };
+}
+
+if (modalHistory) {
+  modalHistory.onclick = (e) => {
+    if (e.target === modalHistory) {
+      modalHistory.classList.remove('active', 'open');
+    }
   };
 }
 

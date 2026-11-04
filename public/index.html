@@ -18,15 +18,25 @@
       <div style="display: flex; justify-content: center; margin-bottom: 12px;">
         <img src="/img/logo.jpg" alt="Pinheiro Churros" style="max-height: 160px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 6px 20px rgba(255, 51, 102, 0.45)); border-radius: 12px;">
       </div>
-      <div class="header-badge">
-        <span class="status-dot"></span>
+      <div class="header-badge" id="header-status-badge">
+        <span class="status-dot" id="header-status-dot"></span>
         <span id="header-status-text">Trailer Aberto • Fritando na Hora</span>
       </div>
       <p class="trailer-tagline" id="trailer-tagline-display" style="margin-top: 10px;">Peça do seu carro e retire no balcão quando estiver pronto!</p>
     </header>
 
+    <!-- Banner de Loja Fechada (Exibido apenas quando fechado) -->
+    <div id="closed-store-banner" class="closed-store-banner" style="display: none;">
+      <div class="closed-store-icon">🥖✨</div>
+      <h2 class="closed-store-title">Já encerramos nossos pedidos por hoje! ❤️</h2>
+      <p class="closed-store-desc">
+        Nossa fritadeira está descansando e agradecemos muito pelo carinho e preferência!<br>
+        Em breve estaremos de volta com muitos churros quentinhos e crocantes para você. Te esperamos! 🥰
+      </p>
+    </div>
+
     <!-- Banner Drive Thru -->
-    <div class="car-banner">
+    <div class="car-banner" id="car-banner-notice">
       <span class="car-banner-icon">🚗</span>
       <div>
         <strong>Evite filas!</strong> Faça seu pedido aqui pelo celular, aguarde confortavelmente no seu carro e venha retirar no balcão assim que o pedido ficar pronto.

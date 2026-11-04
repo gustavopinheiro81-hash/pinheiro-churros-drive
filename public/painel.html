@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel do Trailer - Pinheiro Churros</title>
-  <link rel="stylesheet" href="/css/painel.css">
+  <link rel="stylesheet" href="/css/painel.css?v=999">
   <link rel="icon" href="/img/logo.jpg">
 </head>
 <body class="kitchen-body">
@@ -16,7 +16,7 @@
     <div style="display: flex; align-items: center; gap: 14px;">
       <img src="/img/logo.jpg" alt="Pinheiro Churros" style="height: 52px; width: auto; object-fit: contain; border-radius: 8px; border: 1.5px solid #00C8FF; box-shadow: 0 0 12px rgba(0, 200, 255, 0.25);">
       <div>
-        <h1 style="font-size: 18px; font-weight: 900; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
+        <h1 id="admin-trailer-name" style="font-size: 18px; font-weight: 900; color: #FFFFFF; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">
           PINHEIRO CHURROS <span style="color: #FF3366;">•</span> <span style="color: #00C8FF;">PAINEL DA COZINHA</span>
         </h1>
         <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
@@ -45,6 +45,12 @@
 
     <!-- Lado Direito: Apenas os botões essenciais -->
     <div style="display: flex; align-items: center; gap: 10px;">
+      <!-- Botão Abrir / Fechar Loja -->
+      <button class="btn-kitchen-action btn-store-open" id="btn-toggle-store" title="Clique para alternar entre Loja Aberta e Fechada">
+        <span class="store-dot open" id="store-status-dot"></span>
+        <span id="store-status-text">LOJA ABERTA</span>
+      </button>
+
       <button class="btn-kitchen-action" id="btn-open-history" style="background: #0284C7; border: 1px solid #38BDF8; color: white; font-weight: 800; padding: 9px 16px; border-radius: 8px;">
         <span>📊 Vendas Anteriores</span>
       </button>
@@ -208,6 +214,6 @@
   <!-- Socket.io -->
   <script src="/socket.io/socket.io.js"></script>
   <!-- Admin Script -->
-  <script src="/js/admin.js?v=30"></script>
+  <script src="/js/admin.js?v=999"></script>
 </body>
 </html>

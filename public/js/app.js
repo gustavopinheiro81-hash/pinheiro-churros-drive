@@ -9,6 +9,45 @@ let cart = [];
 let currentCustomizingItem = null;
 let itemQuantity = 1;
 let activeOrder = null;
+let isStoreOpen = true;
+
+// Controle de Loja Aberta / Fechada
+function applyStoreStatus(isOpen) {
+  isStoreOpen = (isOpen !== false);
+  const badge = document.getElementById('header-status-badge');
+  const dot = document.getElementById('header-status-dot');
+  const statusText = document.getElementById('header-status-text');
+  const closedBanner = document.getElementById('closed-store-banner');
+  const carNotice = document.getElementById('car-banner-notice');
+
+  if (isStoreOpen) {
+    document.body.classList.remove('store-is-closed');
+    if (badge) badge.className = 'header-badge';
+    if (dot) dot.className = 'status-dot';
+    if (statusText) statusText.textContent = 'Trailer Aberto • Fritando na Hora';
+    if (closedBanner) closedBanner.style.display = 'none';
+    if (carNotice) carNotice.style.display = 'flex';
+    document.querySelectorAll('.btn-add').forEach(btn => {
+      btn.textContent = 'Escolher +';
+      btn.style.pointerEvents = '';
+    });
+    updateCartBar();
+  } else {
+    document.body.classList.add('store-is-closed');
+    if (badge) badge.className = 'header-badge closed';
+    if (dot) dot.className = 'status-dot';
+    if (statusText) statusText.textContent = 'Encerramos por Hoje • Voltamos em Breve ✨';
+    if (closedBanner) closedBanner.style.display = 'block';
+    if (carNotice) carNotice.style.display = 'none';
+    document.querySelectorAll('.btn-add').forEach(btn => {
+      btn.textContent = 'Até Breve ✨';
+      btn.style.pointerEvents = 'none';
+    });
+    if (modalOptions) modalOptions.classList.remove('open');
+    if (modalCheckout) modalCheckout.classList.remove('open');
+    if (cartBar) cartBar.classList.add('hidden');
+  }
+}
 
 // Audio context for alerts
 let audioCtx = null;
@@ -149,10 +188,24 @@ async function loadConfig() {
     if (configData.pixKey) {
       trackerPixKey.textContent = configData.pixKey;
     }
+    if (typeof configData.isOpen !== 'undefined') {
+      applyStoreStatus(configData.isOpen);
+    }
   } catch (err) {
     console.error('Erro ao carregar config:', err);
   }
 }
+
+// Socket: Ouvir atualizações de abertura/fechamento da loja em tempo real
+socket.on('store_status_changed', (data) => {
+  applyStoreStatus(data.isOpen);
+});
+
+socket.on('config_updated', (cfg) => {
+  if (typeof cfg.isOpen !== 'undefined') {
+    applyStoreStatus(cfg.isOpen);
+  }
+});
 
 // Load Menu
 async function loadMenu() {
@@ -290,6 +343,10 @@ window.selectChurroSize = function(size) {
 
 // Open Item Customization Modal
 function openItemModal(item) {
+  if (!isStoreOpen) {
+    alert('Já encerramos nossos pedidos por hoje! 🥖💖 Em breve estaremos fritando delícias quentinhas para você de novo. Obrigado pelo carinho!');
+    return;
+  }
   initAudio();
   currentCustomizingItem = JSON.parse(JSON.stringify(item));
   itemQuantity = 1;
@@ -522,6 +579,11 @@ formCheckout.onsubmit = async (e) => {
   const customerPhone = document.getElementById('input-phone').value.trim();
   const paymentMethod = document.getElementById('input-payment').value;
   const notes = document.getElementById('input-order-notes').value.trim();
+
+  if (!isStoreOpen) {
+    alert('Já encerramos nossos pedidos por hoje! 🥖💖 Agradecemos muito pelo carinho e esperamos você na nossa próxima fornada!');
+    return;
+  }
 
   if (!customerName || !vehicleInfo) {
     alert('Por favor, informe seu Nome e a Identificação do seu Carro!');

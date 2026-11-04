@@ -136,6 +136,75 @@ body {
   line-height: 1.4;
 }
 
+/* Banner de Loja Fechada - Acolhedor e Doce */
+.closed-store-banner {
+  background: linear-gradient(135deg, #1C1917, #2D1822);
+  border: 1.5px solid #F59E0B;
+  border-radius: var(--radius-md);
+  padding: 22px 18px;
+  text-align: center;
+  margin: 18px 0;
+  box-shadow: 0 8px 30px rgba(245, 158, 11, 0.18);
+  animation: banner-sweet-glow 3s infinite alternate;
+}
+
+@keyframes banner-sweet-glow {
+  0% { box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15); border-color: #F59E0B; }
+  100% { box-shadow: 0 8px 30px rgba(255, 74, 162, 0.25); border-color: #FF4AA2; }
+}
+
+.closed-store-icon {
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.closed-store-title {
+  color: #FFE600;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+}
+
+.closed-store-desc {
+  color: #FEF3C7;
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Estado de Loja Fechada no Badge do Header */
+.header-badge.closed {
+  background: rgba(245, 158, 11, 0.15) !important;
+  border-color: #F59E0B !important;
+  color: #FDE68A !important;
+}
+
+.header-badge.closed .status-dot {
+  background-color: #F59E0B !important;
+  box-shadow: 0 0 8px #F59E0B !important;
+  animation: none !important;
+}
+
+/* Quando a Loja está Fechada: Desabilita Ações de Pedido */
+body.store-is-closed .btn-choose-product,
+body.store-is-closed .product-action button {
+  background: #334155 !important;
+  color: #94A3B8 !important;
+  border: 1px solid #475569 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+
+body.store-is-closed .cart-floating-bar {
+  display: none !important;
+}
+
+body.store-is-closed .product-card {
+  opacity: 0.72;
+}
+
 /* Banner de Aviso Drive-Thru */
 .car-banner {
   background: #1B1D26;
