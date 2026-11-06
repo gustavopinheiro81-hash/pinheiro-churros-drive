@@ -377,6 +377,34 @@ function renderColumn(container, ordersList, type) {
         <strong style="color: #F8FAFC; font-size: 15px;">Total: ${formatBRL(order.total)}</strong>
       </div>
 
+      ${(() => {
+        if (order.paymentMethod !== 'Pix') return '';
+        if (order.hasPixReceipt && order.pixReceiptUrl) {
+          return `
+            <div class="k-receipt-box verified" onclick="viewReceipt('${order.id}')" title="Clique para conferir o comprovante Pix">
+              <div class="k-receipt-thumb-wrap">
+                <img src="${order.pixReceiptUrl}" class="k-receipt-thumb" alt="Comprovante">
+              </div>
+              <div class="k-receipt-info">
+                <div class="k-receipt-status-title"><span>✓</span> Comprovante Anexado</div>
+                <div class="k-receipt-action-hint">Toque para conferir o comprovante 🔍</div>
+              </div>
+              <button type="button" class="k-btn-view-receipt">VER</button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="k-receipt-box pending">
+              <span style="font-size: 18px;">⚠️</span>
+              <div class="k-receipt-info">
+                <div style="color: #FBBF24; font-weight: 800; font-size: 12px;">Pix sem comprovante</div>
+                <div style="color: #94A3B8; font-size: 11px;">Aguardando envio pelo cliente</div>
+              </div>
+            </div>
+          `;
+        }
+      })()}
+
       ${actionBtnHtml ? `<div style="margin-top: 10px;">${actionBtnHtml}</div>` : ''}
     `;
 
@@ -670,5 +698,61 @@ if (btnHistoryYesterday) {
     const yesterdayStr = getLocalDateString(yesterday);
     historyDatePicker.value = yesterdayStr;
     loadHistoryForDate(yesterdayStr);
+  };
+}
+
+// ====== MODAL DE VISUALIZAÇÃO DO COMPROVANTE PIX ======
+const modalViewReceipt = document.getElementById('modal-view-receipt');
+const btnCloseReceipt = document.getElementById('btn-close-receipt');
+const viewReceiptImg = document.getElementById('view-receipt-img');
+const viewReceiptPdf = document.getElementById('view-receipt-pdf');
+const viewReceiptOrderNum = document.getElementById('view-receipt-order-num');
+const viewReceiptSubtitle = document.getElementById('view-receipt-subtitle');
+const viewReceiptTotal = document.getElementById('view-receipt-total');
+const viewReceiptDownloadLink = document.getElementById('view-receipt-download-link');
+
+window.viewReceipt = function(orderId) {
+  const order = allOrders.find(o => o.id === orderId);
+  if (!order || !order.pixReceiptUrl) {
+    alert('Comprovante não disponível.');
+    return;
+  }
+
+  if (viewReceiptOrderNum) viewReceiptOrderNum.textContent = order.orderNumber || '#--';
+  if (viewReceiptSubtitle) {
+    viewReceiptSubtitle.textContent = `Cliente: ${order.customerName} | Carro: ${order.vehicleInfo}`;
+  }
+  if (viewReceiptTotal) viewReceiptTotal.textContent = formatBRL(order.total);
+  if (viewReceiptDownloadLink) viewReceiptDownloadLink.href = order.pixReceiptUrl;
+
+  const isPdf = order.pixReceiptUrl.toLowerCase().endsWith('.pdf');
+  if (isPdf) {
+    if (viewReceiptImg) viewReceiptImg.style.display = 'none';
+    if (viewReceiptPdf) {
+      viewReceiptPdf.src = order.pixReceiptUrl;
+      viewReceiptPdf.style.display = 'block';
+    }
+  } else {
+    if (viewReceiptPdf) viewReceiptPdf.style.display = 'none';
+    if (viewReceiptImg) {
+      viewReceiptImg.src = order.pixReceiptUrl;
+      viewReceiptImg.style.display = 'block';
+    }
+  }
+
+  if (modalViewReceipt) modalViewReceipt.classList.add('active', 'open');
+};
+
+if (btnCloseReceipt) {
+  btnCloseReceipt.onclick = () => {
+    if (modalViewReceipt) modalViewReceipt.classList.remove('active', 'open');
+  };
+}
+
+if (modalViewReceipt) {
+  modalViewReceipt.onclick = (e) => {
+    if (e.target === modalViewReceipt) {
+      modalViewReceipt.classList.remove('active', 'open');
+    }
   };
 }

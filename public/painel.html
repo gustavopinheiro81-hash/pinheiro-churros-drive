@@ -211,6 +211,37 @@
     </div>
   </div>
 
+  <!-- MODAL DE VISUALIZAÇÃO DO COMPROVANTE PIX -->
+  <div id="modal-view-receipt" class="modal-overlay">
+    <div class="modal-sheet" style="background: #14151B; color: white; max-width: 650px; border: 2px solid #10B981; max-height: 92vh; display: flex; flex-direction: column;">
+      <div class="modal-header" style="border-color: #2B2F3E; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h3 class="modal-title" style="color: #34D399; font-size: 18px; font-weight: 900; display: flex; align-items: center; gap: 8px;">
+            <span>📄 Comprovante Pix</span>
+            <span id="view-receipt-order-num" style="background: #064E3B; color: #6EE7B7; border: 1px solid #10B981; padding: 2px 8px; border-radius: 4px; font-size: 13px;">#--</span>
+          </h3>
+          <p id="view-receipt-subtitle" style="font-size: 12px; color: #94A3B8; margin-top: 3px;">Cliente: - | Carro: -</p>
+        </div>
+        <button class="btn-close-modal" id="btn-close-receipt" style="background: #2B2F3E; color: white; border: none; font-size: 24px; padding: 4px 10px; border-radius: 6px; cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="padding: 12px 20px; background: #0B0E14; border-bottom: 1px solid #2B2F3E; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div>
+          <span style="font-size: 11px; color: #94A3B8; text-transform: uppercase; font-weight: 700;">Valor a conferir no Pix:</span>
+          <div id="view-receipt-total" style="font-size: 20px; font-weight: 900; color: #FFE600;">R$ 0,00</div>
+        </div>
+        <a id="view-receipt-download-link" href="#" target="_blank" class="btn-kitchen-action" style="background: #0284C7; border: 1px solid #38BDF8; font-size: 12px; padding: 6px 12px; text-decoration: none;">
+          <span>Abrir Original ↗</span>
+        </a>
+      </div>
+
+      <div style="padding: 16px; overflow-y: auto; text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; background: #06080C; min-height: 250px;">
+        <img id="view-receipt-img" src="" alt="Comprovante Pix" style="max-width: 100%; max-height: 55vh; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.8); object-fit: contain;">
+        <iframe id="view-receipt-pdf" src="" style="width: 100%; height: 55vh; display: none; border: none;"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Socket.io -->
   <script src="/socket.io/socket.io.js"></script>
   <!-- Admin Script -->

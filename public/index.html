@@ -121,7 +121,16 @@
           <span id="tracker-pix-key">chave@pix.com</span>
           <button class="btn-copy-pix" id="btn-copy-pix-tracker" type="button">Copiar Pix</button>
         </div>
-        <small style="color: #166534; display: block; margin-top: 6px;">Pague antes de retirar no balcão e mostre o comprovante!</small>
+        <div id="tracker-receipt-status" style="margin-top: 10px; padding: 10px 12px; background: rgba(16, 185, 129, 0.15); border: 1px solid #10B981; border-radius: 8px; display: none;">
+          <div style="font-weight: 800; font-size: 13px; color: #34D399; display: flex; align-items: center; gap: 6px;">
+            <span>📄</span>
+            <span id="tracker-receipt-status-text">Comprovante anexado com sucesso!</span>
+          </div>
+          <small style="color: #CBD5E1; font-size: 11px; display: block; margin-top: 3px;">O trailer já recebeu o seu comprovante para conferir.</small>
+          <a id="tracker-receipt-link" href="#" target="_blank" style="display: inline-block; margin-top: 6px; color: #38BDF8; font-size: 12px; font-weight: 700; text-decoration: underline;">
+            Visualizar comprovante enviado 🔍
+          </a>
+        </div>
       </div>
 
       <!-- Resumo dos Itens Pedidos -->
@@ -252,11 +261,76 @@
         <div class="form-group">
           <label class="form-label" for="input-payment">Forma de Pagamento: *</label>
           <select id="input-payment" class="form-select">
-            <option value="Pix">Pix (Chave exibida após confirmar)</option>
+            <option value="Pix" selected>Pix (Anexe o comprovante abaixo)</option>
             <option value="Cartão de Crédito">Cartão de Crédito (na retirada)</option>
             <option value="Cartão de Débito">Cartão de Débito (na retirada)</option>
             <option value="Dinheiro">Dinheiro (na retirada)</option>
           </select>
+        </div>
+
+        <!-- Seção Dinâmica de Pagamento Pix com Chave e Anexo de Comprovante -->
+        <div id="checkout-pix-box" class="pix-checkout-container" style="display: none;">
+          <div class="pix-checkout-header">
+            <span class="pix-badge-icon">⚡</span>
+            <div>
+              <strong style="color: #34D399; font-size: 14px; display: block;">Pagamento via Pix</strong>
+              <small style="color: #94A3B8; font-size: 11px;">Copie a chave, pague no seu banco e anexe o comprovante abaixo!</small>
+            </div>
+          </div>
+
+          <!-- Chave Pix para Copiar -->
+          <div class="pix-key-wrapper">
+            <div style="font-size: 11px; color: #94A3B8; margin-bottom: 4px; font-weight: 700;">CHAVE PIX DO TRAILER:</div>
+            <div class="pix-copy-bar">
+              <span id="checkout-pix-key-val" class="pix-key-code">Carregando chave...</span>
+              <button type="button" id="btn-copy-checkout-pix" class="btn-pix-copy">
+                <span>📋 Copiar Chave</span>
+              </button>
+            </div>
+            <div id="checkout-pix-beneficiary-wrap" style="font-size: 11px; color: #A7F3D0; margin-top: 5px; display: none;">
+              Titular: <strong id="checkout-pix-beneficiary"></strong>
+            </div>
+          </div>
+
+          <!-- Valor a transferir -->
+          <div class="pix-amount-bar">
+            <span style="font-size: 12px; color: #E2E8F0; font-weight: 700;">Valor a transferir:</span>
+            <span id="checkout-pix-total-val" style="font-size: 17px; font-weight: 900; color: #FFE600;">R$ 0,00</span>
+          </div>
+
+          <!-- Campo de Upload do Comprovante -->
+          <div class="pix-upload-section">
+            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span>Anexar Comprovante do Pix: *</span>
+              <span class="pix-req-tag">OBRIGATÓRIO</span>
+            </label>
+
+            <!-- Input invisível de arquivo (aceita imagem ou pdf, e câmera de celular) -->
+            <input type="file" id="input-pix-receipt" accept="image/*,application/pdf" style="display: none;">
+
+            <!-- Botão / Área de Arrastar/Selecionar -->
+            <div id="pix-dropzone" class="pix-dropzone">
+              <div class="dropzone-icon">📸</div>
+              <div class="dropzone-text">
+                <strong>Toque aqui para anexar o comprovante</strong>
+                <span>Tire uma foto ou selecione da sua galeria / PDF</span>
+              </div>
+            </div>
+
+            <!-- Preview do Comprovante Selecionado -->
+            <div id="pix-receipt-preview" class="pix-receipt-preview" style="display: none;">
+              <div class="preview-thumb-wrap">
+                <img id="pix-preview-img" src="" alt="Comprovante" style="display: none;">
+                <div id="pix-preview-pdf" style="display: none; font-size: 28px;">📄</div>
+              </div>
+              <div class="preview-details">
+                <span class="preview-name" id="pix-preview-filename">comprovante.jpg</span>
+                <span class="preview-size" id="pix-preview-filesize">0 KB</span>
+                <span class="preview-status">✅ Comprovante pronto</span>
+              </div>
+              <button type="button" class="btn-remove-receipt" id="btn-remove-pix-receipt" title="Remover comprovante">&times;</button>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">

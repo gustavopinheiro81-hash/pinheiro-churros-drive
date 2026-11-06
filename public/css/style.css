@@ -1453,3 +1453,231 @@ body.store-is-closed .product-card {
   font-size: 14px;
   margin-top: 40px;
 }
+
+/* ====== COMPROVANTE PIX (CHECKOUT & UPLOAD) ====== */
+.pix-checkout-container {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1.5px solid #10B981;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+  animation: fadeInPix 0.3s ease;
+}
+
+@keyframes fadeInPix {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pix-checkout-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(16, 185, 129, 0.35);
+}
+
+.pix-badge-icon {
+  font-size: 20px;
+  background: #064E3B;
+  color: #34D399;
+  border: 1px solid #10B981;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pix-key-wrapper {
+  margin-top: 10px;
+}
+
+.pix-copy-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pix-key-code {
+  flex: 1;
+  background: #0B0E14;
+  border: 1px solid #1E293B;
+  color: #38BDF8;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-family: monospace;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: all;
+}
+
+.btn-pix-copy {
+  background: #10B981;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-pix-copy:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.btn-pix-copy.copied {
+  background: #0284C7;
+}
+
+.pix-amount-bar {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pix-req-tag {
+  font-size: 10px;
+  background: #7F1D1D;
+  color: #FCA5A5;
+  border: 1px solid #EF4444;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.pix-dropzone {
+  border: 2px dashed #10B981;
+  background: rgba(11, 14, 20, 0.7);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pix-dropzone:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #34D399;
+}
+
+.dropzone-icon {
+  font-size: 28px;
+}
+
+.dropzone-text {
+  text-align: left;
+}
+
+.dropzone-text strong {
+  display: block;
+  font-size: 13px;
+  color: #F8FAFC;
+}
+
+.dropzone-text span {
+  display: block;
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 2px;
+}
+
+.pix-receipt-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0B0E14;
+  border: 1.5px solid #10B981;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.preview-thumb-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #1E293B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #334155;
+  flex-shrink: 0;
+}
+
+.preview-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.preview-name {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #F8FAFC;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-size {
+  display: block;
+  font-size: 11px;
+  color: #94A3B8;
+}
+
+.preview-status {
+  display: block;
+  font-size: 11px;
+  color: #34D399;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.btn-remove-receipt {
+  background: #334155;
+  color: #F87171;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-remove-receipt:hover {
+  background: #7F1D1D;
+  color: white;
+}

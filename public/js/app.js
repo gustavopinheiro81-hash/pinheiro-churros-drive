@@ -187,6 +187,16 @@ async function loadConfig() {
     }
     if (configData.pixKey) {
       trackerPixKey.textContent = configData.pixKey;
+      const checkoutPixKeyVal = document.getElementById('checkout-pix-key-val');
+      if (checkoutPixKeyVal) checkoutPixKeyVal.textContent = configData.pixKey;
+    }
+    if (configData.pixBeneficiary) {
+      const benWrap = document.getElementById('checkout-pix-beneficiary-wrap');
+      const benVal = document.getElementById('checkout-pix-beneficiary');
+      if (benWrap && benVal) {
+        benVal.textContent = configData.pixBeneficiary;
+        benWrap.style.display = 'block';
+      }
     }
     if (typeof configData.isOpen !== 'undefined') {
       applyStoreStatus(configData.isOpen);
@@ -505,9 +515,184 @@ function updateCartBar() {
   }
 }
 
+// ====== COMPROVANTE PIX (UPLOAD E PRÉ-VISUALIZAÇÃO) ======
+const inputPayment = document.getElementById('input-payment');
+const checkoutPixBox = document.getElementById('checkout-pix-box');
+const inputPixReceipt = document.getElementById('input-pix-receipt');
+const pixDropzone = document.getElementById('pix-dropzone');
+const pixReceiptPreview = document.getElementById('pix-receipt-preview');
+const pixPreviewImg = document.getElementById('pix-preview-img');
+const pixPreviewPdf = document.getElementById('pix-preview-pdf');
+const pixPreviewFilename = document.getElementById('pix-preview-filename');
+const pixPreviewFilesize = document.getElementById('pix-preview-filesize');
+const btnRemovePixReceipt = document.getElementById('btn-remove-pix-receipt');
+const btnCopyCheckoutPix = document.getElementById('btn-copy-checkout-pix');
+const checkoutPixKeyVal = document.getElementById('checkout-pix-key-val');
+const checkoutPixTotalVal = document.getElementById('checkout-pix-total-val');
+const checkoutPixBeneficiary = document.getElementById('checkout-pix-beneficiary');
+const checkoutPixBeneficiaryWrap = document.getElementById('checkout-pix-beneficiary-wrap');
+
+let currentPixReceipt = null; // { dataUrl, fileName, fileSize, isPdf }
+
+function updatePixCheckoutUI() {
+  if (!checkoutPixBox || !inputPayment) return;
+  const isPix = inputPayment.value === 'Pix';
+  if (isPix) {
+    checkoutPixBox.style.display = 'block';
+    if (checkoutPixKeyVal && configData) {
+      checkoutPixKeyVal.textContent = configData.pixKey || 'Chave não cadastrada';
+    }
+    if (checkoutPixBeneficiary && checkoutPixBeneficiaryWrap && configData) {
+      if (configData.pixBeneficiary) {
+        checkoutPixBeneficiary.textContent = configData.pixBeneficiary;
+        checkoutPixBeneficiaryWrap.style.display = 'block';
+      } else {
+        checkoutPixBeneficiaryWrap.style.display = 'none';
+      }
+    }
+    if (checkoutPixTotalVal && checkoutTotalVal) {
+      checkoutPixTotalVal.textContent = checkoutTotalVal.textContent;
+    }
+  } else {
+    checkoutPixBox.style.display = 'none';
+  }
+}
+
+if (inputPayment) {
+  inputPayment.addEventListener('change', updatePixCheckoutUI);
+}
+
+// Compressão de imagem inteligente no navegador (Canvas -> JPEG 82%)
+function compressImageFile(file, maxWidth = 1200, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    if (file.type && file.type.includes('pdf')) {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ dataUrl: reader.result, fileName: file.name, fileSize: file.size, isPdf: true });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        const approxSize = Math.round((dataUrl.length * 3) / 4);
+        resolve({ dataUrl, fileName: file.name, fileSize: approxSize, isPdf: false });
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleReceiptFile(file) {
+  if (!file) return;
+  try {
+    const res = await compressImageFile(file);
+    currentPixReceipt = res;
+
+    // Show preview
+    if (res.isPdf) {
+      if (pixPreviewImg) pixPreviewImg.style.display = 'none';
+      if (pixPreviewPdf) pixPreviewPdf.style.display = 'block';
+    } else {
+      if (pixPreviewPdf) pixPreviewPdf.style.display = 'none';
+      if (pixPreviewImg) {
+        pixPreviewImg.src = res.dataUrl;
+        pixPreviewImg.style.display = 'block';
+      }
+    }
+
+    if (pixPreviewFilename) pixPreviewFilename.textContent = res.fileName;
+    if (pixPreviewFilesize) {
+      const kb = Math.round(res.fileSize / 1024);
+      pixPreviewFilesize.textContent = kb > 1024 ? `${(kb / 1024).toFixed(1)} MB` : `${kb} KB`;
+    }
+
+    if (pixDropzone) pixDropzone.style.display = 'none';
+    if (pixReceiptPreview) pixReceiptPreview.style.display = 'flex';
+  } catch (err) {
+    console.error('Erro ao processar comprovante:', err);
+    alert('Não foi possível ler a imagem. Tente novamente com uma foto ou print.');
+  }
+}
+
+if (pixDropzone && inputPixReceipt) {
+  pixDropzone.addEventListener('click', () => {
+    inputPixReceipt.click();
+  });
+
+  pixDropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    pixDropzone.style.borderColor = '#34D399';
+    pixDropzone.style.background = 'rgba(16, 185, 129, 0.2)';
+  });
+
+  pixDropzone.addEventListener('dragleave', () => {
+    pixDropzone.style.borderColor = '';
+    pixDropzone.style.background = '';
+  });
+
+  pixDropzone.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    pixDropzone.style.borderColor = '';
+    pixDropzone.style.background = '';
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      await handleReceiptFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  inputPixReceipt.addEventListener('change', async (e) => {
+    if (e.target.files && e.target.files.length) {
+      await handleReceiptFile(e.target.files[0]);
+    }
+  });
+}
+
+if (btnRemovePixReceipt) {
+  btnRemovePixReceipt.addEventListener('click', () => {
+    currentPixReceipt = null;
+    if (inputPixReceipt) inputPixReceipt.value = '';
+    if (pixReceiptPreview) pixReceiptPreview.style.display = 'none';
+    if (pixDropzone) pixDropzone.style.display = 'flex';
+  });
+}
+
+if (btnCopyCheckoutPix) {
+  btnCopyCheckoutPix.addEventListener('click', () => {
+    if (!configData || !configData.pixKey) return;
+    navigator.clipboard.writeText(configData.pixKey).then(() => {
+      const orig = btnCopyCheckoutPix.innerHTML;
+      btnCopyCheckoutPix.innerHTML = '<span>✓ Copiada!</span>';
+      btnCopyCheckoutPix.classList.add('copied');
+      setTimeout(() => {
+        btnCopyCheckoutPix.innerHTML = orig;
+        btnCopyCheckoutPix.classList.remove('copied');
+      }, 2500);
+    }).catch(() => {
+      prompt('Copie a chave Pix:', configData.pixKey);
+    });
+  });
+}
+
 // Open Checkout Modal
 btnOpenCart.onclick = () => {
   renderCheckoutItems();
+  updatePixCheckoutUI();
   modalCheckout.classList.add('active');
 };
 
@@ -590,6 +775,16 @@ formCheckout.onsubmit = async (e) => {
     return;
   }
 
+  // Se a forma de pagamento for Pix, exige o comprovante anexado
+  if (paymentMethod === 'Pix' && !currentPixReceipt) {
+    alert('⚠️ Por favor, anexe a foto ou print do seu comprovante Pix para que o trailer identifique o seu pagamento!');
+    const pixBox = document.getElementById('checkout-pix-box');
+    if (pixBox) {
+      pixBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return;
+  }
+
   const total = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const orderPayload = {
@@ -599,7 +794,8 @@ formCheckout.onsubmit = async (e) => {
     paymentMethod,
     notes,
     items: cart,
-    total
+    total,
+    pixReceipt: currentPixReceipt || null
   };
 
   const submitBtn = document.getElementById('btn-submit-order');
@@ -622,6 +818,12 @@ formCheckout.onsubmit = async (e) => {
       cart = [];
       updateCartBar();
       modalCheckout.classList.remove('active');
+
+      // Clear pix receipt
+      currentPixReceipt = null;
+      if (inputPixReceipt) inputPixReceipt.value = '';
+      if (pixReceiptPreview) pixReceiptPreview.style.display = 'none';
+      if (pixDropzone) pixDropzone.style.display = 'flex';
 
       // Track order via socket
       socket.emit('track_order', activeOrder.id);
@@ -685,11 +887,23 @@ function showTracker(order) {
 
   trackerTotalVal.textContent = formatBRL(order.total);
 
-  // Show Pix key if payment is Pix
+  // Show Pix key and receipt info if payment is Pix
+  const trackerReceiptStatus = document.getElementById('tracker-receipt-status');
+  const trackerReceiptLink = document.getElementById('tracker-receipt-link');
+
   if (order.paymentMethod === 'Pix') {
     trackerPixBox.style.display = 'block';
+    if (order.pixReceiptUrl && trackerReceiptStatus && trackerReceiptLink) {
+      trackerReceiptStatus.style.display = 'block';
+      trackerReceiptLink.href = order.pixReceiptUrl;
+    } else if (trackerReceiptStatus) {
+      trackerReceiptStatus.style.display = 'none';
+    }
   } else {
     trackerPixBox.style.display = 'none';
+    if (trackerReceiptStatus) {
+      trackerReceiptStatus.style.display = 'none';
+    }
   }
 
   updateTrackerStatus(order.status);
