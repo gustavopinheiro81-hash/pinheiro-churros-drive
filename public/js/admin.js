@@ -92,6 +92,13 @@ const btnOpenSettings = document.getElementById('btn-open-settings');
 const btnCloseSettings = document.getElementById('btn-close-settings');
 const formSettings = document.getElementById('form-settings');
 
+// Socket connect / reconnect handlers
+socket.on('connect', () => {
+  console.log('[SOCKET] Conectado ao servidor da cozinha!');
+  socket.emit('join_kitchen');
+  loadOrders();
+});
+
 // Init
 document.addEventListener('DOMContentLoaded', async () => {
   // Unlock audio on any click
@@ -102,6 +109,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Socket connect to kitchen room
   socket.emit('join_kitchen');
+
+  // Polling de redundância a cada 3 segundos: garante 100% que pedidos sempre apareçam
+  setInterval(() => {
+    loadOrders();
+  }, 3000);
 
   // Elapsed time refresher every 20 seconds
   setInterval(() => {
@@ -235,10 +247,23 @@ socket.on('store_status_changed', (data) => {
 });
 
 // Load Orders
+let knownOrderIds = new Set();
 async function loadOrders() {
   try {
     const res = await fetch('/api/orders');
-    allOrders = await res.json();
+    const freshOrders = await res.json();
+    
+    // Se já tinha carregado pedidos antes e chegou algum novo em "recebido", toca o som!
+    if (knownOrderIds.size > 0) {
+      const hasBrandNew = freshOrders.some(o => o.status === 'recebido' && !knownOrderIds.has(o.id));
+      if (hasBrandNew) {
+        console.log('[POLL] Novo pedido detectado!');
+        playNewOrderSound();
+      }
+    }
+    
+    allOrders = freshOrders;
+    knownOrderIds = new Set(allOrders.map(o => o.id));
     renderBoard();
   } catch (err) {
     console.error('Erro ao carregar pedidos:', err);
@@ -308,7 +333,7 @@ function renderColumn(container, ordersList, type) {
         const bg = isBaby ? '#1E3A8A' : '#78350F';
         const border = isBaby ? '#60A5FA' : '#F59E0B';
         const text = isBaby ? '#BFDBFE' : '#FEF3C7';
-        sizeBadge = `<span style="display: inline-block; background: ${bg}; border: 1.5px solid ${border}; color: ${text}; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 900; margin-right: 6px;">${isBaby ? '👶 BABY' : '🥖 NORMAL'}</span>`;
+        sizeBadge = `<span style="display: inline-block; background: ${bg}; border: 1.5px solid ${border}; color: ${text}; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 900; margin-right: 6px;">${isBaby ? '👶 BABY' : '🍽️ NORMAL'}</span>`;
       }
 
       let detailsHtml = '';

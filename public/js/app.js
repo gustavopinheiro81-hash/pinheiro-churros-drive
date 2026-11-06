@@ -330,7 +330,7 @@ function renderMenuItems() {
         const babyPrice = item.priceBaby || (item.price / 2);
         priceBadgesHtml = `
           <div class="badge-prices">
-            <span class="badge-price-normal">🥖 Normal: ${formatBRL(item.price)}</span>
+            <span class="badge-price-normal">🍴 Normal: ${formatBRL(item.price)}</span>
             <span class="badge-price-baby">👶 Baby: ${formatBRL(babyPrice)}</span>
           </div>
         `;
@@ -348,7 +348,7 @@ function renderMenuItems() {
           ${priceBadgesHtml}
         </div>
         <div class="product-action">
-          <div class="product-emoji">${item.emoji || '🥖'}</div>
+          <div class="product-emoji">${item.emoji || '🍴'}</div>
           <button class="btn-add" type="button">Escolher +</button>
         </div>
       `;
