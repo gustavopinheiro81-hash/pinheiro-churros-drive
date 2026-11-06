@@ -356,10 +356,11 @@ function renderColumn(container, ordersList, type) {
         <span class="k-time-elapsed ${isLate ? 'late' : ''}" data-created="${order.createdAt}">${getElapsedText(order.createdAt)}</span>
       </div>
 
+      ${order.vehicleInfo ? `
       <div class="k-vehicle-banner">
         <span>🚗</span>
         <span>${order.vehicleInfo}</span>
-      </div>
+      </div>` : ''}
 
       <div class="k-customer-name">
         Cliente: <strong>${order.customerName}</strong>
@@ -720,7 +721,7 @@ window.viewReceipt = function(orderId) {
 
   if (viewReceiptOrderNum) viewReceiptOrderNum.textContent = order.orderNumber || '#--';
   if (viewReceiptSubtitle) {
-    viewReceiptSubtitle.textContent = `Cliente: ${order.customerName} | Carro: ${order.vehicleInfo}`;
+    viewReceiptSubtitle.textContent = `Cliente: ${order.customerName}${order.vehicleInfo ? ` | Carro: ${order.vehicleInfo}` : ''}`;
   }
   if (viewReceiptTotal) viewReceiptTotal.textContent = formatBRL(order.total);
   if (viewReceiptDownloadLink) viewReceiptDownloadLink.href = order.pixReceiptUrl;

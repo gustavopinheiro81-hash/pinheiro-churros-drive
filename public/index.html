@@ -9,11 +9,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css?v=sgp1">
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('pinheiro_churros_theme') || 'dark';
+        if (t === 'light' || t === 'brand') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
 
   <!-- VIEW 1: CARDÁPIO (MENU & PEDIDO) -->
   <div id="view-menu" class="container">
+    <!-- BARRA DE SELEÇÃO DE TEMA (3 OPÇÕES: ESCURO / CLARO / MARCA SGP) -->
+    <div class="theme-switch-bar">
+      <span class="theme-switch-label">🎨 Visual:</span>
+      <div class="theme-switch-group">
+        <button type="button" class="btn-theme-choice active" id="btn-theme-dark" onclick="switchTheme('dark')" aria-label="Ativar tema escuro">
+          <span class="theme-icon">🌙</span> Escuro
+        </button>
+        <button type="button" class="btn-theme-choice" id="btn-theme-light" onclick="switchTheme('light')" aria-label="Ativar tema claro">
+          <span class="theme-icon">☀️</span> Claro
+        </button>
+        <button type="button" class="btn-theme-choice" id="btn-theme-brand" onclick="switchTheme('brand')" aria-label="Ativar tema Colorido">
+          <span class="theme-icon">🎨</span> Colorido
+        </button>
+      </div>
+    </div>
+
     <header class="trailer-header" style="text-align: center; padding: 22px 16px 18px;">
       <div style="display: flex; justify-content: center; margin-bottom: 12px;">
         <img src="/img/logo.jpg" alt="Pinheiro Churros" style="max-height: 160px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 6px 20px rgba(255, 51, 102, 0.45)); border-radius: 12px;">
@@ -68,6 +94,22 @@
 
   <!-- VIEW 2: ACOMPANHAMENTO EM TEMPO REAL (TRACKER) -->
   <div id="view-tracker" class="container" style="display: none;">
+    <!-- BARRA DE SELEÇÃO DE TEMA (3 OPÇÕES: ESCURO / CLARO / MARCA SGP) -->
+    <div class="theme-switch-bar">
+      <span class="theme-switch-label">🎨 Visual:</span>
+      <div class="theme-switch-group">
+        <button type="button" class="btn-theme-choice active" id="btn-theme-dark-tracker" onclick="switchTheme('dark')" aria-label="Ativar tema escuro">
+          <span class="theme-icon">🌙</span> Escuro
+        </button>
+        <button type="button" class="btn-theme-choice" id="btn-theme-light-tracker" onclick="switchTheme('light')" aria-label="Ativar tema claro">
+          <span class="theme-icon">☀️</span> Claro
+        </button>
+        <button type="button" class="btn-theme-choice" id="btn-theme-brand-tracker" onclick="switchTheme('brand')" aria-label="Ativar tema Colorido">
+          <span class="theme-icon">🎨</span> Colorido
+        </button>
+      </div>
+    </div>
+
     <header class="trailer-header" style="text-align: center; padding: 20px 16px 16px;">
       <div style="display: flex; justify-content: center; margin-bottom: 10px;">
         <img src="/img/logo.jpg" alt="Pinheiro Churros" style="max-height: 100px; width: auto; object-fit: contain; border-radius: 10px;">
@@ -238,19 +280,11 @@
         <span id="checkout-total-val" style="font-size: 22px; font-weight: 900; color: var(--brand-yellow);">R$ 0,00</span>
       </div>
 
-      <!-- Formulário de Identificação do Carro -->
+      <!-- Formulário de Dados do Cliente -->
       <form id="form-checkout">
         <div class="form-group">
           <label class="form-label" for="input-customer-name">Seu Nome: *</label>
           <input type="text" id="input-customer-name" class="form-input" placeholder="Ex: Lucas Silva" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="input-vehicle">Identificação do seu Carro / Vaga: *</label>
-          <input type="text" id="input-vehicle" class="form-input car-input-highlight" placeholder="Ex: Onix Branco placa 4567, Gol Vermelho, etc." required>
-          <small style="color: var(--text-muted); font-size: 11px; display: block; margin-top: 4px;">
-            🚗 É assim que vamos saber quem é você para preparar tudo certinho!
-          </small>
         </div>
 
         <div class="form-group">

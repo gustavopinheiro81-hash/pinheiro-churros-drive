@@ -11,6 +11,39 @@ let itemQuantity = 1;
 let activeOrder = null;
 let isStoreOpen = true;
 
+// ====== CONTROLE DE TEMA (3 OPÇÕES: ESCURO / CLARO / MARCA SGP) ======
+window.switchTheme = function(theme) {
+  const validThemes = ['dark', 'light', 'brand'];
+  const chosenTheme = validThemes.includes(theme) ? theme : 'dark';
+  document.documentElement.setAttribute('data-theme', chosenTheme);
+  document.body.setAttribute('data-theme', chosenTheme);
+  try {
+    localStorage.setItem('pinheiro_churros_theme', chosenTheme);
+  } catch (e) {}
+
+  const darkBtns = [document.getElementById('btn-theme-dark'), document.getElementById('btn-theme-dark-tracker')];
+  const lightBtns = [document.getElementById('btn-theme-light'), document.getElementById('btn-theme-light-tracker')];
+  const brandBtns = [document.getElementById('btn-theme-brand'), document.getElementById('btn-theme-brand-tracker')];
+
+  [darkBtns, lightBtns, brandBtns].forEach(group => group.forEach(b => b && b.classList.remove('active')));
+
+  if (chosenTheme === 'light') {
+    lightBtns.forEach(b => b && b.classList.add('active'));
+  } else if (chosenTheme === 'brand') {
+    brandBtns.forEach(b => b && b.classList.add('active'));
+  } else {
+    darkBtns.forEach(b => b && b.classList.add('active'));
+  }
+};
+
+// Carrega tema salvo ou escuro por padrão
+(function() {
+  try {
+    const saved = localStorage.getItem('pinheiro_churros_theme') || 'dark';
+    window.switchTheme(saved);
+  } catch (e) {}
+})();
+
 // Controle de Loja Aberta / Fechada
 function applyStoreStatus(isOpen) {
   isStoreOpen = (isOpen !== false);
@@ -760,7 +793,8 @@ formCheckout.onsubmit = async (e) => {
   }
 
   const customerName = document.getElementById('input-customer-name').value.trim();
-  const vehicleInfo = document.getElementById('input-vehicle').value.trim();
+  const vehicleInput = document.getElementById('input-vehicle');
+  const vehicleInfo = vehicleInput ? vehicleInput.value.trim() : '';
   const customerPhone = document.getElementById('input-phone').value.trim();
   const paymentMethod = document.getElementById('input-payment').value;
   const notes = document.getElementById('input-order-notes').value.trim();
@@ -770,8 +804,8 @@ formCheckout.onsubmit = async (e) => {
     return;
   }
 
-  if (!customerName || !vehicleInfo) {
-    alert('Por favor, informe seu Nome e a Identificação do seu Carro!');
+  if (!customerName) {
+    alert('Por favor, informe seu Nome!');
     return;
   }
 
@@ -850,7 +884,14 @@ function showTracker(order) {
 
   trackOrderNumber.textContent = order.orderNumber || '#--';
   trackCustomerName.textContent = order.customerName;
-  trackVehicleTag.textContent = `🚗 ${order.vehicleInfo}`;
+  if (trackVehicleTag) {
+    if (order.vehicleInfo) {
+      trackVehicleTag.style.display = 'inline-flex';
+      trackVehicleTag.textContent = `🚗 ${order.vehicleInfo}`;
+    } else {
+      trackVehicleTag.style.display = 'none';
+    }
+  }
 
   // Render items
   trackerItemsList.innerHTML = '';

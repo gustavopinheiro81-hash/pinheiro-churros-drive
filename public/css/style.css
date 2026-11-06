@@ -37,6 +37,24 @@
   --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
+[data-theme="light"] {
+  --brand-black: #F1F4F9;
+  --brand-surface: #FFFFFF;
+  --brand-surface-card: #FFFFFF;
+  --brand-surface-hover: #F8FAFC;
+  --brand-pink: #E11D48;
+  --brand-pink-glow: rgba(225, 29, 72, 0.18);
+  --brand-yellow: #B45309;
+  --brand-yellow-glow: rgba(180, 83, 9, 0.15);
+  --brand-cyan: #0284C7;
+  --brand-cyan-glow: rgba(2, 132, 199, 0.18);
+  --brand-white: #0F172A;
+  --brand-muted: #64748B;
+  --brand-border: #E2E8F0;
+  
+  --shadow-glow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -50,6 +68,7 @@ body {
   color: var(--brand-white);
   line-height: 1.5;
   min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Container */
@@ -1680,4 +1699,993 @@ body.store-is-closed .product-card {
 .btn-remove-receipt:hover {
   background: #7F1D1D;
   color: white;
+}
+
+
+/* ====== BARRA DE SELEÇÃO DE TEMA (CLARO / ESCURO) ====== */
+.theme-switch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--brand-surface-card);
+  border: 1.5px solid var(--brand-border);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease;
+}
+
+[data-theme="light"] .theme-switch-bar {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+.theme-switch-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.theme-switch-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 3px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--brand-border);
+}
+
+[data-theme="light"] .theme-switch-group {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.btn-theme-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: var(--brand-muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.btn-theme-choice:hover {
+  color: var(--brand-white);
+}
+
+[data-theme="light"] .btn-theme-choice:hover {
+  color: #0F172A;
+}
+
+.btn-theme-choice.active {
+  background: var(--brand-pink);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px var(--brand-pink-glow);
+}
+
+[data-theme="light"] .btn-theme-choice.active {
+  background: #E11D48;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.25);
+}
+
+.theme-icon {
+  font-size: 13px;
+}
+
+/* ====== REGRAS DO TEMA CLARO (ALTO CONTRASTE E VISIBILIDADE PERFEITA) ====== */
+[data-theme="light"] .trailer-header {
+  background: #FFFFFF;
+  border-bottom: 3px solid #0284C7;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .trailer-header::after {
+  opacity: 0.05;
+}
+
+[data-theme="light"] .header-badge {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+  color: #065F46;
+}
+
+[data-theme="light"] .trailer-tagline {
+  color: #475569;
+}
+
+[data-theme="light"] .car-banner {
+  background: #FFFBEB;
+  border-color: #F59E0B;
+  color: #78350F;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.12);
+}
+
+[data-theme="light"] .car-banner strong {
+  color: #451A03;
+}
+
+[data-theme="light"] .closed-store-banner {
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  border-color: #F59E0B;
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.18);
+}
+
+[data-theme="light"] .closed-store-title {
+  color: #92400E;
+}
+
+[data-theme="light"] .closed-store-desc {
+  color: #78350F;
+}
+
+[data-theme="light"] .product-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+[data-theme="light"] .product-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .product-name {
+  color: #0F172A;
+}
+
+[data-theme="light"] .product-desc {
+  color: #64748B;
+}
+
+[data-theme="light"] .product-emoji {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .product-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #F59E0B;
+}
+
+[data-theme="light"] .badge-price-normal {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+[data-theme="light"] .badge-price-baby {
+  background: #E0F2FE;
+  border-color: #38BDF8;
+  color: #0369A1;
+}
+
+[data-theme="light"] .category-tab {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  color: #475569;
+}
+
+[data-theme="light"] .category-tab:hover {
+  color: #0F172A;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .category-tab.active {
+  background: #E11D48;
+  color: #FFFFFF;
+  border-color: #E11D48;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+}
+
+[data-theme="light"] .section-desc {
+  color: #64748B;
+}
+
+[data-theme="light"] .section-tag-pill {
+  color: #B45309;
+}
+
+[data-theme="light"] .cart-floating-bar {
+  background: #FFFFFF;
+  border-top: 2px solid #E2E8F0;
+  box-shadow: 0 -8px 25px rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .cart-items-count {
+  color: #64748B;
+}
+
+[data-theme="light"] .cart-total-value {
+  color: #B45309;
+}
+
+/* Modals no Tema Claro */
+[data-theme="light"] .modal-overlay {
+  background: rgba(15, 23, 42, 0.65);
+}
+
+[data-theme="light"] .modal-sheet {
+  background: #FFFFFF;
+  color: #0F172A;
+  border-top-color: #E11D48;
+  box-shadow: 0 -10px 40px rgba(15, 23, 42, 0.25);
+}
+
+[data-theme="light"] .modal-header {
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .modal-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .btn-close-modal {
+  background: #F1F5F9;
+  color: #334155;
+}
+
+[data-theme="light"] .btn-close-modal:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+[data-theme="light"] .size-card {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .size-card-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .size-card-desc {
+  color: #64748B;
+}
+
+[data-theme="light"] #card-size-normal.selected {
+  border-color: #F59E0B;
+  background: #FEF3C7;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+[data-theme="light"] #card-size-normal.selected .size-card-title,
+[data-theme="light"] #card-size-normal.selected .size-card-desc,
+[data-theme="light"] #card-size-normal.selected .size-card-price {
+  color: #78350F;
+}
+
+[data-theme="light"] #card-size-baby.selected {
+  border-color: #0284C7;
+  background: #E0F2FE;
+  box-shadow: 0 0 15px rgba(2, 132, 199, 0.2);
+}
+
+[data-theme="light"] #card-size-baby.selected .size-card-title,
+[data-theme="light"] #card-size-baby.selected .size-card-desc,
+[data-theme="light"] #card-size-baby.selected .size-card-price {
+  color: #0369A1;
+}
+
+[data-theme="light"] .option-group-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .option-req {
+  background: #E0F2FE;
+  border-color: #38BDF8;
+  color: #0369A1;
+}
+
+[data-theme="light"] .topping-chip {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #1E293B;
+}
+
+[data-theme="light"] .topping-chip:hover {
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .topping-chip.selected {
+  background: #FFF1F2;
+  border-color: #E11D48;
+  color: #9F1239;
+  box-shadow: 0 0 10px rgba(225, 29, 72, 0.15);
+}
+
+[data-theme="light"] .topping-chip-check {
+  border-color: #94A3B8;
+}
+
+[data-theme="light"] .form-label {
+  color: #0F172A;
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea,
+[data-theme="light"] .form-select {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+[data-theme="light"] .form-input::placeholder,
+[data-theme="light"] .form-textarea::placeholder {
+  color: #94A3B8;
+}
+
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] .form-textarea:focus,
+[data-theme="light"] .form-select:focus {
+  border-color: #0284C7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+[data-theme="light"] .car-input-highlight {
+  border-color: #F59E0B;
+  background: #FFFBEB;
+  color: #92400E;
+}
+
+[data-theme="light"] .qty-btn {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #1E293B;
+}
+
+[data-theme="light"] .qty-btn:active {
+  background: #E2E8F0;
+}
+
+[data-theme="light"] .qty-value {
+  color: #0F172A;
+}
+
+[data-theme="light"] .cart-checkout-item {
+  border-bottom-color: #E2E8F0;
+}
+
+[data-theme="light"] .checkout-item-title {
+  color: #0F172A;
+}
+
+[data-theme="light"] .checkout-item-sub {
+  color: #64748B;
+}
+
+[data-theme="light"] .checkout-item-price {
+  color: #B45309;
+}
+
+[data-theme="light"] #checkout-total-val {
+  color: #B45309 !important;
+}
+
+/* Pix no Tema Claro */
+[data-theme="light"] .pix-checkout-container {
+  background: #F0FDF4;
+  border-color: #10B981;
+}
+
+[data-theme="light"] .pix-key-code {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  color: #0369A1;
+}
+
+[data-theme="light"] .pix-dropzone {
+  background: #FFFFFF;
+  border-color: #10B981;
+}
+
+[data-theme="light"] .pix-dropzone:hover {
+  background: #ECFDF5;
+}
+
+[data-theme="light"] .dropzone-text strong {
+  color: #0F172A;
+}
+
+[data-theme="light"] .dropzone-text span {
+  color: #64748B;
+}
+
+[data-theme="light"] .pix-receipt-preview {
+  background: #FFFFFF;
+  border-color: #10B981;
+}
+
+[data-theme="light"] .preview-name {
+  color: #0F172A;
+}
+
+[data-theme="light"] .preview-size {
+  color: #64748B;
+}
+
+[data-theme="light"] .btn-remove-receipt {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
+[data-theme="light"] .btn-remove-receipt:hover {
+  background: #FCA5A5;
+  color: #7F1D1D;
+}
+
+/* Tracker no Tema Claro */
+[data-theme="light"] .tracker-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .tracker-order-badge {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="light"] .tracker-customer-name {
+  color: #0F172A;
+}
+
+[data-theme="light"] .tracker-car-tag {
+  background: #E0F2FE;
+  border-color: #38BDF8;
+  color: #0369A1;
+}
+
+[data-theme="light"] .status-hero-msg {
+  color: #334155;
+}
+
+[data-theme="light"] .status-hero.status-recebido {
+  background: #FFFBEB;
+  border-color: #F59E0B;
+}
+
+[data-theme="light"] .status-hero.status-preparo {
+  background: #FFF1F2;
+  border-color: #E11D48;
+}
+
+[data-theme="light"] .status-hero.status-pronto {
+  background: #ECFDF5;
+  border-color: #10B981;
+}
+
+[data-theme="light"] .status-hero.status-entregue {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .timeline-bubble {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #64748B;
+}
+
+[data-theme="light"] .timeline-label {
+  color: #64748B;
+}
+
+[data-theme="light"] .timeline-step.active .timeline-bubble {
+  background: #F59E0B;
+  border-color: #F59E0B;
+  color: #FFFFFF;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.35);
+}
+
+[data-theme="light"] .timeline-step.active .timeline-label {
+  color: #92400E;
+}
+
+[data-theme="light"] .timeline-step.completed .timeline-bubble {
+  background: #10B981;
+  border-color: #10B981;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .timeline-step.completed .timeline-label {
+  color: #065F46;
+}
+
+[data-theme="light"] .tracker-timeline::before {
+  background: #E2E8F0;
+}
+
+[data-theme="light"] .pix-key-display {
+  background: #FFFFFF;
+  border-color: #A7F3D0;
+  color: #0F172A;
+}
+
+[data-theme="light"] #tracker-receipt-status {
+  background: #ECFDF5 !important;
+  border-color: #10B981 !important;
+}
+
+[data-theme="light"] #tracker-receipt-status-text {
+  color: #065F46 !important;
+}
+
+[data-theme="light"] #tracker-receipt-status small {
+  color: #047857 !important;
+}
+
+
+/* ====== TEMA MARCA SGP (LOOK & FEEL ORIGINAL PINHEIRO CHURROS SGP) ====== */
+[data-theme="brand"] {
+  --brand-black: #fff0f7;
+  --brand-surface: #ffffff;
+  --brand-surface-card: #ffffff;
+  --brand-surface-hover: #fff5fa;
+  --brand-pink: #ff4aa2;
+  --brand-pink-glow: rgba(255, 74, 162, 0.3);
+  --brand-yellow: #d97706;
+  --brand-yellow-glow: rgba(255, 216, 74, 0.3);
+  --brand-cyan: #0284c7;
+  --brand-cyan-glow: rgba(2, 132, 199, 0.2);
+  --brand-white: #26131f;
+  --brand-muted: #5c384a;
+  --brand-border: #ffd4ea;
+  
+  --shadow-glow: 0 8px 30px rgba(69, 32, 14, 0.12);
+}
+
+[data-theme="brand"] body,
+body[data-theme="brand"] {
+  background: linear-gradient(180deg, rgba(255, 74, 162, 0.88) 0%, rgba(255, 123, 194, 0.88) 45%, rgba(255, 216, 74, 0.92) 100%), url('/assets/brand_pinheiro_churros_wallpaper.png') center/cover no-repeat fixed;
+  color: #26131f;
+}
+
+[data-theme="brand"] .theme-switch-bar {
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 20px rgba(69, 32, 14, 0.1);
+}
+
+[data-theme="brand"] .theme-switch-label {
+  color: #4b1e35;
+}
+
+[data-theme="brand"] .theme-switch-group {
+  background: rgba(255, 74, 162, 0.1);
+  border-color: rgba(255, 74, 162, 0.25);
+}
+
+[data-theme="brand"] .btn-theme-choice {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .btn-theme-choice:hover {
+  color: #26131f;
+}
+
+[data-theme="brand"] .btn-theme-choice.active {
+  background: #ff4aa2;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(255, 74, 162, 0.35);
+}
+
+[data-theme="brand"] .trailer-header {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 4px solid #ff4aa2;
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 12px 35px rgba(69, 32, 14, 0.14);
+}
+
+[data-theme="brand"] .trailer-header::after {
+  opacity: 0.06;
+}
+
+[data-theme="brand"] .trailer-title {
+  color: #26131f;
+}
+
+[data-theme="brand"] .trailer-tagline {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .header-badge {
+  background: rgba(255, 74, 162, 0.12);
+  border: 1.5px solid rgba(255, 74, 162, 0.4);
+  color: #be185d;
+}
+
+[data-theme="brand"] .car-banner {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid #ffd84a;
+  color: #26131f;
+  box-shadow: 0 8px 25px rgba(69, 32, 14, 0.1);
+  border-radius: 18px;
+}
+
+[data-theme="brand"] .car-banner strong {
+  color: #78350f;
+}
+
+[data-theme="brand"] .closed-store-banner {
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid #ff4aa2;
+  box-shadow: 0 10px 30px rgba(255, 74, 162, 0.2);
+}
+
+[data-theme="brand"] .closed-store-title {
+  color: #be185d;
+}
+
+[data-theme="brand"] .closed-store-desc {
+  color: #26131f;
+}
+
+[data-theme="brand"] .category-tab {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  color: #4b1e35;
+  box-shadow: 0 4px 14px rgba(69, 32, 14, 0.08);
+}
+
+[data-theme="brand"] .category-tab:hover {
+  color: #26131f;
+  border-color: #ff4aa2;
+}
+
+[data-theme="brand"] .category-tab.active {
+  background: #ff4aa2;
+  color: #ffffff;
+  border-color: #ff4aa2;
+  box-shadow: 0 6px 18px rgba(255, 74, 162, 0.4);
+}
+
+[data-theme="brand"] .section-title {
+  color: #ff4aa2;
+}
+
+[data-theme="brand"] .section-tag-pill {
+  color: #be185d;
+}
+
+[data-theme="brand"] .section-desc {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .product-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(69, 32, 14, 0.08);
+}
+
+[data-theme="brand"] .product-card:hover {
+  border-color: #ff4aa2;
+  box-shadow: 0 12px 30px rgba(255, 74, 162, 0.16);
+}
+
+[data-theme="brand"] .product-name {
+  color: #26131f;
+}
+
+[data-theme="brand"] .product-desc {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .product-emoji {
+  background: #fff5fa;
+  border-color: #ffd4ea;
+}
+
+[data-theme="brand"] .product-badge {
+  background: #ffd84a;
+  color: #26131f;
+}
+
+[data-theme="brand"] .badge-price-normal {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+[data-theme="brand"] .badge-price-baby {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  color: #0369a1;
+}
+
+[data-theme="brand"] .btn-add {
+  background: linear-gradient(135deg, #ff4aa2, #d91469);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(255, 74, 162, 0.35);
+}
+
+[data-theme="brand"] .cart-floating-bar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 3px solid #ff4aa2;
+  box-shadow: 0 -10px 30px rgba(69, 32, 14, 0.16);
+}
+
+[data-theme="brand"] .cart-items-count {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .cart-total-value {
+  color: #be185d;
+}
+
+[data-theme="brand"] .btn-view-order {
+  background: linear-gradient(135deg, #ff4aa2, #d91469);
+  box-shadow: 0 6px 20px rgba(255, 74, 162, 0.4);
+}
+
+/* Modals no Tema Marca SGP */
+[data-theme="brand"] .modal-overlay {
+  background: rgba(38, 19, 31, 0.65);
+}
+
+[data-theme="brand"] .modal-sheet {
+  background: #fff8fc;
+  color: #26131f;
+  border-top: 4px solid #ff4aa2;
+  box-shadow: 0 -12px 40px rgba(69, 32, 14, 0.28);
+}
+
+[data-theme="brand"] .modal-header {
+  border-bottom-color: #ffd4ea;
+}
+
+[data-theme="brand"] .modal-title {
+  color: #26131f;
+}
+
+[data-theme="brand"] .btn-close-modal {
+  background: #ffe6f3;
+  color: #be185d;
+}
+
+[data-theme="brand"] .size-card {
+  background: #ffffff;
+  border-color: #ffd4ea;
+}
+
+[data-theme="brand"] .size-card-title {
+  color: #26131f;
+}
+
+[data-theme="brand"] .size-card-desc {
+  color: #5c384a;
+}
+
+[data-theme="brand"] #card-size-normal.selected {
+  border-color: #ff4aa2;
+  background: #fff0f7;
+  box-shadow: 0 0 16px rgba(255, 74, 162, 0.22);
+}
+
+[data-theme="brand"] #card-size-normal.selected .size-card-title,
+[data-theme="brand"] #card-size-normal.selected .size-card-price {
+  color: #be185d;
+}
+
+[data-theme="brand"] #card-size-baby.selected {
+  border-color: #0284c7;
+  background: #e0f2fe;
+}
+
+[data-theme="brand"] .option-group-title {
+  color: #26131f;
+}
+
+[data-theme="brand"] .topping-chip {
+  background: #ffffff;
+  border-color: #ffd4ea;
+  color: #26131f;
+}
+
+[data-theme="brand"] .topping-chip:hover {
+  border-color: #ff4aa2;
+}
+
+[data-theme="brand"] .topping-chip.selected {
+  background: #fff0f7;
+  border-color: #ff4aa2;
+  color: #9f1239;
+  box-shadow: 0 0 10px rgba(255, 74, 162, 0.2);
+}
+
+[data-theme="brand"] .topping-chip-check {
+  border-color: #f472b6;
+}
+
+[data-theme="brand"] .form-label {
+  color: #26131f;
+}
+
+[data-theme="brand"] .form-input,
+[data-theme="brand"] .form-textarea,
+[data-theme="brand"] .form-select {
+  background: #ffffff;
+  border-color: #f9a8d4;
+  color: #26131f;
+}
+
+[data-theme="brand"] .form-input::placeholder,
+[data-theme="brand"] .form-textarea::placeholder {
+  color: #9d7b8b;
+}
+
+[data-theme="brand"] .form-input:focus,
+[data-theme="brand"] .form-textarea:focus,
+[data-theme="brand"] .form-select:focus {
+  border-color: #ff4aa2;
+  box-shadow: 0 0 0 3px rgba(255, 74, 162, 0.2);
+}
+
+[data-theme="brand"] .car-input-highlight {
+  border-color: #f59e0b;
+  background: #fffbe3;
+  color: #92400e;
+}
+
+[data-theme="brand"] .qty-btn {
+  background: #ffe6f3;
+  border-color: #f9a8d4;
+  color: #be185d;
+}
+
+[data-theme="brand"] .qty-value {
+  color: #26131f;
+}
+
+[data-theme="brand"] .cart-checkout-item {
+  border-bottom-color: #ffd4ea;
+}
+
+[data-theme="brand"] .checkout-item-title {
+  color: #26131f;
+}
+
+[data-theme="brand"] .checkout-item-sub {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .checkout-item-price {
+  color: #be185d;
+}
+
+[data-theme="brand"] #checkout-total-val {
+  color: #be185d !important;
+}
+
+/* Pix no Tema Marca SGP */
+[data-theme="brand"] .pix-checkout-container {
+  background: #f0fdf4;
+  border-color: #10b981;
+}
+
+[data-theme="brand"] .pix-key-code {
+  background: #ffffff;
+  border-color: #a7f3d0;
+  color: #0369a1;
+}
+
+[data-theme="brand"] .pix-dropzone {
+  background: #ffffff;
+  border-color: #10b981;
+}
+
+[data-theme="brand"] .pix-dropzone:hover {
+  background: #ecfdf5;
+}
+
+[data-theme="brand"] .dropzone-text strong {
+  color: #26131f;
+}
+
+[data-theme="brand"] .dropzone-text span {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .pix-receipt-preview {
+  background: #ffffff;
+  border-color: #10b981;
+}
+
+[data-theme="brand"] .preview-name {
+  color: #26131f;
+}
+
+/* Tracker no Tema Marca SGP */
+[data-theme="brand"] .tracker-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 35px rgba(69, 32, 14, 0.12);
+}
+
+[data-theme="brand"] .tracker-order-badge {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
+}
+
+[data-theme="brand"] .tracker-customer-name {
+  color: #26131f;
+}
+
+[data-theme="brand"] .status-hero.status-recebido {
+  background: #fffbe3;
+  border-color: #f59e0b;
+}
+
+[data-theme="brand"] .status-hero.status-preparo {
+  background: #fff0f7;
+  border-color: #ff4aa2;
+}
+
+[data-theme="brand"] .status-hero.status-pronto {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+[data-theme="brand"] .status-hero-msg {
+  color: #26131f;
+}
+
+[data-theme="brand"] .timeline-bubble {
+  background: #ffe6f3;
+  border-color: #f9a8d4;
+  color: #be185d;
+}
+
+[data-theme="brand"] .timeline-label {
+  color: #5c384a;
+}
+
+[data-theme="brand"] .timeline-step.active .timeline-bubble {
+  background: #ff4aa2;
+  border-color: #ff4aa2;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(255, 74, 162, 0.4);
+}
+
+[data-theme="brand"] .timeline-step.active .timeline-label {
+  color: #be185d;
+  font-weight: 900;
+}
+
+[data-theme="brand"] .tracker-timeline::before {
+  background: #ffd4ea;
 }
