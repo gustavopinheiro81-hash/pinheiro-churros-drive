@@ -19,8 +19,15 @@ const DATA_DIR = path.resolve(__dirname, 'data');
 const MENU_FILE = path.join(DATA_DIR, 'menu.json');
 const CONFIG_FILE = path.join(DATA_DIR, 'config.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
+const UPLOADS_DIR = path.join(PUBLIC_DIR, 'uploads', 'comprovantes');
 
-app.use(express.json());
+// Ensure uploads directory exists
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ limit: '25mb', extended: true }));
 // dotfiles: 'allow' enables serving files even if directory starts with a dot (e.g. .gemini)
 app.use(express.static(PUBLIC_DIR, { dotfiles: 'allow' }));
 
@@ -208,21 +215,55 @@ app.post('/api/orders', (req, res) => {
     return res.status(403).json({ error: 'Já encerramos nossos pedidos por hoje! Agradecemos o carinho e te esperamos na próxima fornada quentinha! ❤️' });
   }
 
-  const { customerName, vehicleInfo, customerPhone, items, paymentMethod, notes, total } = req.body;
+  const { customerName, vehicleInfo, customerPhone, items, paymentMethod, notes, total, pixReceipt } = req.body;
 
   if (!customerName || !items || !items.length) {
     return res.status(400).json({ error: 'Dados do pedido incompletos' });
   }
 
+  const orderId = 'ord_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
   const orderNumber = getNextOrderNumber();
+
+  let pixReceiptUrl = null;
+  let hasPixReceipt = false;
+  let pixReceiptOriginalName = null;
+
+  // Process Pix Receipt attachment if provided (dataUrl base64)
+  if (pixReceipt && pixReceipt.dataUrl) {
+    try {
+      const matches = pixReceipt.dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (matches && matches.length === 3) {
+        const mimeType = matches[1];
+        const base64Data = matches[2];
+        let ext = 'jpg';
+        if (mimeType.includes('png')) ext = 'png';
+        else if (mimeType.includes('pdf')) ext = 'pdf';
+        else if (mimeType.includes('webp')) ext = 'webp';
+
+        const safeFileName = `comprovante_${orderId}.${ext}`;
+        const filePath = path.join(UPLOADS_DIR, safeFileName);
+        fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+
+        pixReceiptUrl = `/uploads/comprovantes/${safeFileName}`;
+        hasPixReceipt = true;
+        pixReceiptOriginalName = pixReceipt.fileName || safeFileName;
+      }
+    } catch (receiptErr) {
+      console.error('[ERRO COMPROVANTE PIX]:', receiptErr);
+    }
+  }
+
   const newOrder = {
-    id: 'ord_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+    id: orderId,
     orderNumber,
     customerName: customerName.trim(),
     vehicleInfo: (vehicleInfo || 'No balcão').trim(),
     customerPhone: (customerPhone || '').trim(),
     items,
     paymentMethod: paymentMethod || 'Pix',
+    pixReceiptUrl,
+    hasPixReceipt,
+    pixReceiptOriginalName,
     notes: (notes || '').trim(),
     total: Number(total) || 0,
     status: 'recebido',
@@ -238,9 +279,53 @@ app.post('/api/orders', (req, res) => {
   // Broadcast to kitchen
   io.to('kitchen').emit('new_order', newOrder);
 
-  console.log(`[NOVO PEDIDO] ${newOrder.orderNumber} para ${newOrder.customerName} (${newOrder.vehicleInfo}) - R$ ${newOrder.total.toFixed(2)}`);
+  console.log(`[NOVO PEDIDO] ${newOrder.orderNumber} para ${newOrder.customerName} (${newOrder.vehicleInfo}) - R$ ${newOrder.total.toFixed(2)}${hasPixReceipt ? ' [COM COMPROVANTE PIX]' : ''}`);
 
   res.status(201).json({ success: true, order: newOrder });
+});
+
+// Endpoint to attach / update pix receipt on existing order (e.g., from tracker)
+app.post('/api/orders/:id/receipt', (req, res) => {
+  const order = orders.find(o => o.id === req.params.id);
+  if (!order) return res.status(404).json({ error: 'Pedido não encontrado' });
+
+  const { pixReceipt } = req.body;
+  if (!pixReceipt || !pixReceipt.dataUrl) {
+    return res.status(400).json({ error: 'Nenhum comprovante enviado' });
+  }
+
+  try {
+    const matches = pixReceipt.dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (matches && matches.length === 3) {
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      let ext = 'jpg';
+      if (mimeType.includes('png')) ext = 'png';
+      else if (mimeType.includes('pdf')) ext = 'pdf';
+      else if (mimeType.includes('webp')) ext = 'webp';
+
+      const safeFileName = `comprovante_${order.id}_${Date.now()}.${ext}`;
+      const filePath = path.join(UPLOADS_DIR, safeFileName);
+      fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+
+      order.pixReceiptUrl = `/uploads/comprovantes/${safeFileName}`;
+      order.hasPixReceipt = true;
+      order.pixReceiptOriginalName = pixReceipt.fileName || safeFileName;
+      order.updatedAt = new Date().toISOString();
+
+      saveJson(ORDERS_FILE, orders);
+      io.to('kitchen').emit('order_status_changed', order);
+      io.emit('order_status_changed', order);
+
+      console.log(`[COMPROVANTE ANEXADO] Pedido ${order.orderNumber} comprovante salvo: ${safeFileName}`);
+
+      return res.json({ success: true, order });
+    }
+    res.status(400).json({ error: 'Formato inválido do comprovante' });
+  } catch (err) {
+    console.error('Erro ao salvar comprovante:', err);
+    res.status(500).json({ error: 'Falha ao salvar comprovante' });
+  }
 });
 
 app.patch('/api/orders/:id/status', (req, res) => {
