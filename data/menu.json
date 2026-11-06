@@ -24,13 +24,13 @@
       "description": "Combinações com Ninho e Morango • Normal R$ 16 | Baby R$ 8",
       "tag": "R$ 16,00 / R$ 8,00",
       "items": [
-        { "id": "esp-ninho", "name": "Brigadeiro de Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho", "name": "Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
         { "id": "esp-morango", "name": "Doce de Morango", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
-        { "id": "esp-ninho-doce-leite", "name": "Brigadeiro de Leite Ninho + Doce de Leite", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
-        { "id": "esp-ninho-choc", "name": "Brigadeiro de Leite Ninho + Chocolate", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
-        { "id": "esp-ninho-beijinho", "name": "Brigadeiro de Leite Ninho + Beijinho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
-        { "id": "esp-ninho-goiabada", "name": "Brigadeiro de Leite Ninho + Goiabada", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
-        { "id": "esp-morango-ninho", "name": "Doce de Morango + Brigadeiro de Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-doce-leite", "name": "Leite Ninho + Doce de Leite", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-choc", "name": "Leite Ninho + Chocolate", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-beijinho", "name": "Leite Ninho + Beijinho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-ninho-goiabada", "name": "Leite Ninho + Goiabada", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
+        { "id": "esp-morango-ninho", "name": "Doce de Morango + Leite Ninho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
         { "id": "esp-morango-doce-leite", "name": "Doce de Morango + Doce de Leite", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
         { "id": "esp-morango-choc", "name": "Doce de Morango + Chocolate", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
         { "id": "esp-morango-beijinho", "name": "Doce de Morango + Beijinho", "price": 16.00, "priceBaby": 8.00, "hasSize": true },
@@ -48,37 +48,36 @@
         { "id": "agr-dois-amores", "name": "Dois Amores", "description": "Chocolate + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
         { "id": "agr-romeu-julieta", "name": "Romeu e Julieta", "description": "Goiabada + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
         { "id": "agr-casadinho", "name": "Casadinho", "description": "Goiabada + Doce de Leite + Catupiry", "price": 18.00, "priceBaby": 9.00, "hasSize": true },
-        { "id": "agr-nutella-catupiry", "name": "Nutella + Catupiry", "description": "Nutella original com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "Mega Agridoce" },
-        { "id": "agr-dadinho-catupiry", "name": "Dadinho + Catupiry", "description": "Dadinho cremoso com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "Mega Agridoce" }
+        { "id": "agr-nutella-catupiry", "name": "Nutella + Catupiry", "description": "Nutella original com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "R$ 22,00" },
+        { "id": "agr-dadinho-catupiry", "name": "Dadinho + Catupiry", "description": "Dadinho cremoso com Catupiry", "price": 22.00, "priceBaby": 11.00, "hasSize": true, "badge": "R$ 22,00" }
       ]
     },
     {
       "id": "mega-especiais",
       "name": "Sabores Mega Especiais",
-      "description": "Nutella, Dadinho e Pistache • Normal R$ 20 | Baby R$ 10",
+      "description": "Nutella e Dadinho Cremoso • Normal R$ 20 | Baby R$ 10",
       "tag": "R$ 20,00 / R$ 10,00",
       "items": [
-        { "id": "mega-nutella", "name": "Nutella Original", "price": 20.00, "priceBaby": 10.00, "hasSize": true, "badge": "Top Vendas" },
+        { "id": "mega-nutella", "name": "Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
         { "id": "mega-dadinho", "name": "Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
-        { "id": "mega-pistache", "name": "Pistache", "price": 20.00, "priceBaby": 10.00, "hasSize": true, "badge": "NOVIDADE! ✨" },
         { "id": "mega-doce-leite-nutella", "name": "Doce de Leite + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
         { "id": "mega-beijinho-nutella", "name": "Beijinho + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
         { "id": "mega-morango-nutella", "name": "Doce de Morango + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
-        { "id": "mega-ninho-nutella", "name": "Brigadeiro de Leite Ninho + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-ninho-nutella", "name": "Leite Ninho + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
         { "id": "mega-dadinho-nutella", "name": "Dadinho Cremoso + Nutella", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
-        { "id": "mega-ninho-dadinho", "name": "Brigadeiro de Leite Ninho + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
-        { "id": "mega-morango-dadinho", "name": "Doce de Morango + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true }
+        { "id": "mega-ninho-dadinho", "name": "Leite Ninho + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-morango-dadinho", "name": "Doce de Morango + Dadinho Cremoso", "price": 20.00, "priceBaby": 10.00, "hasSize": true },
+        { "id": "mega-kinder-nutella", "name": "Creme Kinder Bueno + Nutella", "description": "Creme Kinder Bueno com Nutella", "price": 23.00, "priceBaby": 11.50, "hasSize": true, "badge": "R$ 23,00" }
       ]
     },
     {
       "id": "gourmet",
       "name": "Sabores Gourmet",
-      "description": "Com bombons e wafers premium • Normal R$ 25 | Baby R$ 12,50",
+      "description": "Com Wafer Kinder Bueno • Normal R$ 25 | Baby R$ 12,50",
       "tag": "R$ 25,00 / R$ 12,50",
       "items": [
-        { "id": "gour-sonho-valsa", "name": "Sonho de Valsa", "description": "Dadinho + Nutella + 2 Bombons", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" },
-        { "id": "gour-ouro-branco", "name": "Ouro Branco", "description": "Nutella + 2 Bombons", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" },
-        { "id": "gour-kinder-bueno", "name": "Kinder Bueno", "description": "Creme Bueno + 1 Wafer Kinder Bueno", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "NOVIDADE! 👑" }
+        { "id": "gour-kinder-bueno", "name": "Kinder Bueno", "description": "Creme Kinder Bueno + 1 Wafer Kinder Bueno", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "Gourmet ✨" },
+        { "id": "gour-kinder-nutella", "name": "Kinder Bueno + Nutella", "description": "Creme Kinder Bueno + Nutella + 1 Wafer Kinder Bueno", "price": 25.00, "priceBaby": 12.50, "hasSize": true, "badge": "Gourmet ✨" }
       ]
     },
     {
@@ -99,7 +98,7 @@
     { "id": "granulado-colorido", "name": "Granulado Colorido" },
     { "id": "granulado-azul", "name": "Granulado Azul" },
     { "id": "granulado-rosa", "name": "Granulado Rosa" },
-    { "id": "amendoim", "name": "Amendoim Crocante" },
+    { "id": "amendoim", "name": "Amendoim" },
     { "id": "pacoca", "name": "Paçoca" },
     { "id": "chocoball", "name": "Chocoball" },
     { "id": "leite-ninho", "name": "Leite Ninho" },
