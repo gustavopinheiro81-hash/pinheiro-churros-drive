@@ -276,8 +276,9 @@ app.post('/api/orders', (req, res) => {
   orders.unshift(newOrder);
   saveJson(ORDERS_FILE, orders);
 
-  // Broadcast to kitchen
+  // Broadcast to kitchen (emite para a sala e global para garantir 100%)
   io.to('kitchen').emit('new_order', newOrder);
+  io.emit('new_order', newOrder);
 
   console.log(`[NOVO PEDIDO] ${newOrder.orderNumber} para ${newOrder.customerName} (${newOrder.vehicleInfo}) - R$ ${newOrder.total.toFixed(2)}${hasPixReceipt ? ' [COM COMPROVANTE PIX]' : ''}`);
 
